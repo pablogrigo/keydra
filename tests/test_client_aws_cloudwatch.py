@@ -36,21 +36,19 @@ class TestCloudwatchClient(unittest.TestCase):
                 ]
             )
 
-    def test_timed_decorator_gibberish(self):
+    def test_timed_decorator_gibberish_does_not_raise(self):
         with patch.object(CloudwatchClient, 'instance'):
             @timed('Dimension', specialise=True)
             def a(*args, **kwargs):
                 return 'a'
 
-            try:
-                a()
-                a({'provider': 'Beer'})
-                a({'provider': {'ohmy': 'multilevel'}})
-                a({'provider': {'ohmy': 'multilevel'}}, {'with': 'multiarg'})
-                a({}, {})
-                a(None, None)
-                a('string', None)
-                a(None, 'string')
-                a(True, False)
-            except Exception as e:
-                self.fail('timed decorator can NEVER fail: ', e)
+            # Timed decorator is not expected to raise
+            a()
+            a({'provider': 'Beer'})
+            a({'provider': {'ohmy': 'multilevel'}})
+            a({'provider': {'ohmy': 'multilevel'}}, {'with': 'multiarg'})
+            a({}, {})
+            a(None, None)
+            a('string', None)
+            a(None, 'string')
+            a(True, False)
