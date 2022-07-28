@@ -1,8 +1,8 @@
+from requests import Session
 from zeep import Client
+from zeep import helpers
 from zeep.transports import Transport
 from zeep.wsse.username import UsernameToken
-from zeep import helpers
-from requests import Session
 
 
 class SalesforceMarketingCloudClient(object):

@@ -1,17 +1,15 @@
-import unittest
-import requests
 import json
-
-from unittest.mock import patch
+import unittest
 from unittest.mock import MagicMock
+from unittest.mock import patch
 
+import requests
 
 from keydra.clients import github
 
-
 PUBKEY = {
-  "key_id": "012345678912345678",
-  "key": "2Sg8iYjAxxmI2LvUXpJjkYrMxURPc8rrewgfvghwevg="
+    "key_id": "012345678912345678",
+    "key": "2Sg8iYjAxxmI2LvUXpJjkYrMxURPc8rrewgfvghwevg="
 }
 
 
@@ -122,16 +120,16 @@ class TestGithubClient(unittest.TestCase):
         mk_get().text = {
             "total_count": 2,
             "secrets": [
-              {
-                "name": "GH_TOKEN",
-                "created_at": "2019-08-10T14:59:22Z",
-                "updated_at": "2020-01-10T14:59:22Z"
-              },
-              {
-                "name": "GIST_ID",
-                "created_at": "2020-01-10T10:59:22Z",
-                "updated_at": "2020-01-11T11:59:22Z"
-              }
+                {
+                    "name": "GH_TOKEN",
+                    "created_at": "2019-08-10T14:59:22Z",
+                    "updated_at": "2020-01-10T14:59:22Z"
+                },
+                {
+                    "name": "GIST_ID",
+                    "created_at": "2020-01-10T10:59:22Z",
+                    "updated_at": "2020-01-11T11:59:22Z"
+                }
             ]
         }
 

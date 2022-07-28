@@ -1,13 +1,10 @@
 import copy
 import unittest
-
-from keydra.config import KeydraConfig
-
-from keydra.exceptions import ConfigException
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+from keydra.config import KeydraConfig
+from keydra.exceptions import ConfigException
 
 ENVS = {
     'dev': {
@@ -47,10 +44,8 @@ ENVS = {
     },
 }
 
-
 SECRETS = {
-    'aws_deployments':
-    {
+    'aws_deployments': {
         'key': 'km_managed_api_user',
         'provider': 'IAM',
         'rotate': 'nightly',
@@ -60,7 +55,7 @@ SECRETS = {
                 'provider': 'bitbucket',
                 'source': 'key',
                 'envs': [
-                  '*'
+                    '*'
                 ],
                 'config': {
                     'scope': 'account'
@@ -101,49 +96,41 @@ SECRETS = {
             }
         ]
     },
-    'aws_deployment_just_rotate':
-    {
+    'aws_deployment_just_rotate': {
         'key': 'km_managed_just_rotate',
         'provider': 'IAM',
         'rotate': 'nightly'
     },
-    'splunk':
-    {
+    'splunk': {
         'key': 'splunk',
         'provider': 'salesforce',
         'rotate': 'monthly'
     },
-    'cloudflare_canary':
-    {
+    'cloudflare_canary': {
         'key': 'cloudflare_canary_key',
         'provider': 'cloudflare',
         'rotate': 'canaries'
     },
-    'okta_canary':
-    {
+    'okta_canary': {
         'key': 'okta_canary_key',
         'provider': 'okta',
         'rotate': 'canaries'
     },
-    'office365_adhoc':
-    {
+    'office365_adhoc': {
         'key': 'control_secrets',
         'provider': 'office365',
         'rotate': 'adhoc'
     }
 }
 
-
 SECRETS_S = {
-    'splunk':
-    {
+    'splunk': {
         'key': 'splunk',
         'provider': 'salesforce',
         'rotate': 'monthly',
         'distribute': [{'provider': 'secretsmanager', 'envs': ['dev']}]
     }
 }
-
 
 ENV_CONFIG = {
     'provider': 'bitbucket',
@@ -251,9 +238,8 @@ class TestConfig(unittest.TestCase):
 
     def test__filter(self):
         with patch.object(
-            self.client, '_guess_current_environment'
+                self.client, '_guess_current_environment'
         ) as mk_gce:
-
             mk_gce.return_value = 'prod'
             filtered = self.client._filter(ENVS, SECRETS, rotate='nightly')
             self.assertEqual(len(filtered), 1)
@@ -336,7 +322,7 @@ class TestConfig(unittest.TestCase):
             envs['dev']['secrets'].append(str(secret_id))
 
         with patch.object(
-            self.client, '_guess_current_environment'
+                self.client, '_guess_current_environment'
         ) as mk_gce:
             mk_gce.return_value = 'dev'
 
@@ -359,7 +345,7 @@ class TestConfig(unittest.TestCase):
             envs['dev']['secrets'].append(str(secret_id))
 
         with patch.object(
-            self.client, '_guess_current_environment'
+                self.client, '_guess_current_environment'
         ) as mk_gce:
             mk_gce.return_value = 'dev'
             filtered_secrets = self.client._filter(
@@ -385,7 +371,7 @@ class TestConfig(unittest.TestCase):
             envs['dev']['secrets'].append(str(secret_id))
 
         with patch.object(
-            self.client, '_guess_current_environment'
+                self.client, '_guess_current_environment'
         ) as mk_gce:
             mk_gce.return_value = 'dev'
             filtered_secrets = self.client._filter(

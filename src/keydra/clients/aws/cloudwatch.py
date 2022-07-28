@@ -1,6 +1,6 @@
-import boto3
-
 from datetime import datetime
+
+import boto3
 
 
 class CloudwatchClient:
@@ -101,4 +101,5 @@ def timed(metric_name, specialise=True):
             return resp
 
         return timed_execution
+
     return decorator

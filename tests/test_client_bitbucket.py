@@ -1,7 +1,7 @@
 import unittest
-import requests
-
 from unittest.mock import patch
+
+import requests
 
 from keydra.clients import bitbucket
 

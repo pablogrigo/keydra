@@ -1,20 +1,16 @@
-import boto3
 import logging
 import os
-
 from functools import reduce
+
+import boto3
 
 from keydra import loader
 from keydra import logging as km_logging
-
 from keydra.clients.aws.cloudwatch import CloudwatchClient
-
 from keydra.config import KeydraConfig
-
 from keydra.keydra import Keydra
 
 km_logging.setup_logging(logging.INFO)
-
 
 # Global variables are reused across execution contexts (if available)
 SESSION = boto3.Session()
@@ -143,8 +139,7 @@ def lambda_handler(event, context):
 
     LOGGER.info(
         {
-            'message': 'Finished execution of Keydra for the {} run. '
-            'Secrets: {}'.format(
+            'message': 'Finished execution of Keydra for the {} run. Secrets: {}'.format(
                 trigger.upper(),
                 ', '.join(run_for_secrets) if run_for_secrets else 'ALL'
             ),

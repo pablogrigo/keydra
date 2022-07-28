@@ -1,24 +1,20 @@
-import boto3
-import boto3.session
-
-from keydra.providers.base import BaseProvider
-
-from keydra.exceptions import DistributionException
-from keydra.exceptions import RotationException
-
 from datetime import datetime
 from datetime import timedelta
+
+import boto3
+import boto3.session
 
 from keydra.clients.aws.appsync import AppSyncClient
 from keydra.clients.aws.appsync import CreateApiKeyException
 from keydra.clients.aws.appsync import DeleteApiKeyException
 from keydra.clients.aws.appsync import ListApiKeysException
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
 from keydra.logging import get_logger
+from keydra.providers.base import BaseProvider
 from keydra.providers.base import exponential_backoff_retry
 
-
 TEMPLATE_FOR_KEY = 'km_managed_{}'
-
 
 LOGGER = get_logger()
 

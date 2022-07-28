@@ -1,18 +1,15 @@
 from typing import NamedTuple
+
 import boto3
 import boto3.session
 
-from keydra.clients.salesforce_marketing_cloud import SalesforceMarketingCloudClient
-
 from keydra.clients.aws.secretsmanager import SecretsManagerClient
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
-
+from keydra.clients.salesforce_marketing_cloud import SalesforceMarketingCloudClient
 from keydra.exceptions import ConfigException, DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 

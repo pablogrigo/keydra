@@ -1,5 +1,4 @@
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
@@ -7,13 +6,13 @@ from keydra.exceptions import DistributionException
 from keydra.providers import aws_appsync
 
 SECRET = {
-  'description': 'Secret for appsync used by treasury integrations',
-  'key': 'treasury-integrations',
-  'config': {
-      'api-id': 'lnd6axgaezalfb2ffhzrz4ryau'
-  },
-  'provider': 'appsync',
-  'rotate': 'monthly'
+    'description': 'Secret for appsync used by treasury integrations',
+    'key': 'treasury-integrations',
+    'config': {
+        'api-id': 'lnd6axgaezalfb2ffhzrz4ryau'
+    },
+    'provider': 'appsync',
+    'rotate': 'monthly'
 }
 
 
@@ -79,16 +78,16 @@ class TestProviderAWSAppSync(unittest.TestCase):
         new_api_key = 'new_api_key'
         cli._appsync_client = MagicMock()
         cli._appsync_client.create_api_key.return_value = {
-                    'apiKey': {
-                        'id': new_api_key,
-                        'description': 'string',
-                        'expires': 123
-                    }
-                }
+            'apiKey': {
+                'id': new_api_key,
+                'description': 'string',
+                'expires': 123
+            }
+        }
 
         cli._appsync_client.delete_api_key.return_value = {}
         cli._appsync_client.list_api_keys.return_value = {
-                    'apiKeys': []
+            'apiKeys': []
         }
         test_url = 'https://corp.com.au/api/graphql'
         cli._appsync_client.get_graphql_api.return_value = {

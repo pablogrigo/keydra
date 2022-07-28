@@ -1,14 +1,12 @@
 import json
 import unittest
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from botocore.exceptions import ClientError
 
 from keydra import loader
-
 from keydra.exceptions import ConfigException, InvalidSecretProvider
-
-from unittest.mock import MagicMock
-from unittest.mock import patch
 
 
 class TestLoader(unittest.TestCase):

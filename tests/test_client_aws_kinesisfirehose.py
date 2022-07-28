@@ -1,10 +1,8 @@
 import unittest
+from unittest.mock import MagicMock
 
 import keydra.clients.aws.kinesisfirehose as firehose
-
 from keydra.clients.aws.kinesisfirehose import UpdateSecretException
-
-from unittest.mock import MagicMock
 
 SPLUNK_STREAM_DESC = {
     'DeliveryStreamDescription': {

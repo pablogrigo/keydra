@@ -1,14 +1,13 @@
 import json
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 import splunklib.client as splunkclient
 from splunklib.binding import HTTPError
 
-from keydra.clients.splunk import SplunkClient
 from keydra.clients.splunk import AppNotInstalledException
+from keydra.clients.splunk import SplunkClient
 
 SPLUNK_CREDS = {
     "provider": "splunk",
@@ -35,24 +34,24 @@ class Response:
 
 class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
-    def test__splunk_init(self,  mk_splunk):
+    def test__splunk_init(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         sp_client._service.login.assert_called_once_with()
 
     @patch.object(splunkclient, 'Service')
     def test__update_app_not_installed(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         sp_client._service.apps.list.return_value = []
 
@@ -62,11 +61,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_installed(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         sp_client._service.apps.list.return_value = ['app']
         sp_client.update_app_config('app', 'path', 'obj', dict())
@@ -77,11 +76,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_obj_not_exist(self, mk_splunk, mk_error):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         httpResponse = Response(
             status=200, reason="does not exist", body=Body('does not exist')
@@ -103,11 +102,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_obj_error(self, mk_splunk, mk_error):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         httpResponse = Response(status=404, body=Body("wooty tooty"))
         sp_client._service.post.side_effect = HTTPError(httpResponse)
@@ -119,11 +118,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__storepass_fail(self, mk_splunk, mk_error):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         sp_client._service.get.return_value.status = 200
 
@@ -143,11 +142,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__storepass_exists(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         sp_client._service.get.return_value.status = 200
         sp_client._service.post.return_value.status = 200
@@ -163,11 +162,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__storepass_notexist(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         httpResponse = Response(status=200, reason="no!", body=Body(''))
         sp_client._service.post().side_effect = HTTPError(httpResponse)
@@ -184,11 +183,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_obj_exists(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         sp_client._service.post.return_value.status = 200
 
@@ -199,11 +198,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_fail_400(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         sp_client._service.post.return_value.status = 400
 
@@ -213,11 +212,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_fail_except(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
         sp_client._service.post.side_effect = Exception()
 
@@ -228,11 +227,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_bad_input(self, mk_splunk, mk_error):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._service.apps.list.return_value = ['app']
 
         httpResponse = Response(status=200, reason="no!", body=Body(''))
@@ -244,11 +243,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__update_app_create_fail(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
         sp_client._app_exists = MagicMock()
         sp_client._app_exists.return_value = True
 
@@ -263,11 +262,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__change_pass(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         sp_client._service.post.return_value.status = 200
         c_result = sp_client.change_passwd('admin', 'old', 'new')
@@ -283,11 +282,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__rotatetoken(self, mk_splunk, mk_loads):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         mk_loads.return_value = {
             'entry': [{
@@ -312,11 +311,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__rotatetoken_cloud(self, mk_splunk, mk_loads):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
 
         response = {
             'entry': [{
@@ -349,11 +348,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__rotatetoken_notfound(self, mk_splunk, mk_loads):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         mk_loads.return_value = {'entry': [{'name': 'test'}]}
 
@@ -365,11 +364,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__change_pass_fail(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='127.0.0.1',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='127.0.0.1',
+            verify=False
+        )
 
         sp_client._service.post.return_value.status = 400
 
@@ -379,11 +378,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__get_cloudtask(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
         sp_client._service.get.return_value['body'] = MagicMock()
         sp_client._service.get.return_value['body'].read.return_value = json.dumps(
             {
@@ -398,11 +397,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__get_cloudtask_fail(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
         sp_client._service.get.return_value['body'] = MagicMock()
         sp_client._service.get.return_value['body'].read.return_value = json.dumps(
             {
@@ -416,11 +415,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__create_cloudinput(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
 
         sp_client._get_last_splunkcloud_deploytask = MagicMock()
         sp_client._wait_for_splunkcloud_task = MagicMock()
@@ -439,11 +438,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__create_cloudinput_fail(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
 
         sp_client._get_last_splunkcloud_deploytask = MagicMock()
         httpResponse = Response(
@@ -457,11 +456,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__delete_cloudinput_fail(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
 
         sp_client._get_last_splunkcloud_deploytask = MagicMock()
         httpResponse = Response(
@@ -475,11 +474,11 @@ class TestSplunkClient(unittest.TestCase):
     @patch.object(splunkclient, 'Service')
     def test__get_cloudinput(self, mk_splunk):
         sp_client = SplunkClient(
-                username=SPLUNK_CREDS['key'],
-                password=SPLUNK_CREDS['secret'],
-                host='test.splunkcloud.com',
-                verify=False
-            )
+            username=SPLUNK_CREDS['key'],
+            password=SPLUNK_CREDS['secret'],
+            host='test.splunkcloud.com',
+            verify=False
+        )
         sp_client._service.get.return_value['body'] = MagicMock()
         sp_client._service.get.return_value['body'].read.return_value = json.dumps(
             {

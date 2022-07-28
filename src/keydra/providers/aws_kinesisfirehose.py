@@ -2,14 +2,11 @@ import boto3
 import boto3.session
 
 from keydra.clients.aws.kinesisfirehose import FirehoseClient
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
-
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 

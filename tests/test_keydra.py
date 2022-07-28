@@ -1,11 +1,10 @@
-from keydra.clients.aws.cloudwatch import CloudwatchClient
-from keydra.keydra import Keydra
 import unittest
-
-from unittest.mock import Mock, call
 from unittest.mock import MagicMock
+from unittest.mock import Mock, call
 from unittest.mock import patch
 
+from keydra.clients.aws.cloudwatch import CloudwatchClient
+from keydra.keydra import Keydra
 
 CONFIG = [
     {
@@ -33,7 +32,6 @@ CONFIG = [
         ]
     }
 ]
-
 
 SUCCESS = [
     {
@@ -81,7 +79,6 @@ SUCCESS = [
     }
 ]
 
-
 PARTIAL_SUCCESS = [
     {
         'key': 'km_managed_api_user',
@@ -116,7 +113,6 @@ PARTIAL_SUCCESS = [
         }
     }
 ]
-
 
 FAIL = [
     {
@@ -183,7 +179,7 @@ class TestKeydra(unittest.TestCase):
             'key': 'km_managed_api_user',
             'distribute': [
                 {
-                        'provider': 'bogus',
+                    'provider': 'bogus',
                 }]
         },
             'secretval')

@@ -1,15 +1,12 @@
 import json
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
-from keydra.exceptions import DistributionException, RotationException
-
 from keydra.clients.aws.secretsmanager import GetSecretException
 from keydra.clients.aws.secretsmanager import UpdateSecretException
+from keydra.exceptions import DistributionException, RotationException
 from keydra.providers.aws_secretsmanager import SecretsManagerProvider
-
 
 IAM_SECRET = {
     'key': 'secret_key',

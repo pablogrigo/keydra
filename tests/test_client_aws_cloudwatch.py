@@ -1,11 +1,10 @@
 import unittest
+from unittest.mock import MagicMock
+from unittest.mock import call
+from unittest.mock import patch
 
 from keydra.clients.aws.cloudwatch import CloudwatchClient
 from keydra.clients.aws.cloudwatch import timed
-
-from unittest.mock import call
-from unittest.mock import MagicMock
-from unittest.mock import patch
 
 
 class TestCloudwatchClient(unittest.TestCase):

@@ -1,12 +1,9 @@
 import copy
 
 from keydra import loader
-
 from keydra.exceptions import ConfigException
 from keydra.exceptions import InvalidSecretProvider
-
 from keydra.logging import get_logger
-
 
 KEYDRA_CONFIG_REPO = 'keydra-config'
 
@@ -85,10 +82,7 @@ class KeydraConfig(object):
             for env in secret.get('distribute', []):
                 for key in SECRET_ENV_SPEC:
                     if key not in env:
-                        raise ConfigException(
-                            'Secret distribute is missing attribute: {}'
-                            .format(key)
-                        )
+                        raise ConfigException('Secret distribute is missing attribute: {}'.format(key))
 
                 for env_restr in env['envs']:
                     if env_restr == '*':
@@ -146,22 +140,18 @@ class KeydraConfig(object):
 
         for sid, secret in candidate_secrets.items():
             if requested_secrets and sid not in requested_secrets:
-                LOGGER.debug(
-                    'Skipping {} as it was not included in the request ({})'
-                    .format(sid, requested_secrets))
+                LOGGER.debug('Skipping {} as it was not included in the request ({})'.format(sid, requested_secrets))
                 continue
 
             if sid not in current_env['secrets']:
                 LOGGER.debug(
-                    'Skipping {} as it is not listed for environment: {}'
-                    .format(sid, current_env_name))
+                    'Skipping {} as it is not listed for environment: {}'.format(sid, current_env_name))
                 continue
 
             if secret.get('rotate', 'adhoc') != rotate and rotate != 'adhoc':
                 LOGGER.debug(
                     'Skipping {} as its rotation period ({}) doesn\'t '
-                    'match current ({})'
-                    .format(secret, secret.get('rotate', 'adhoc'), rotate))
+                    'match current ({})'.format(secret, secret.get('rotate', 'adhoc'), rotate))
                 continue
 
             if 'distribute' not in secret:

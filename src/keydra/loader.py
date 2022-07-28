@@ -1,19 +1,14 @@
-import boto3
+import inspect
 import json
+from importlib import import_module
 
+import boto3
 from botocore.exceptions import ClientError
 
-from importlib import import_module
-import inspect
-
 from keydra import logging as km_logging
-
 from keydra.clients.aws.secretsmanager import SecretsManagerClient
-
 from keydra.exceptions import ConfigException, InvalidSecretProvider
-
 from keydra.providers.base import BaseProvider
-
 
 DEFAULT_REGION_NAME = 'ap-southeast-2'
 
@@ -80,31 +75,19 @@ def load_provider_client(secret_provider):
 
         providers = []
         for _, obj in inspect.getmembers(module):
-            if (inspect.isclass(obj)
-                    and issubclass(obj, BaseProvider)
-                    and obj != BaseProvider):
+            if inspect.isclass(obj) and issubclass(obj, BaseProvider) and obj != BaseProvider:
                 providers.append(obj)
 
         if len(providers) == 0:
-            raise AttributeError(
-                'Didn\'t find any classes extending BaseProvider in {}'
-                .format(module_name)
-            )
+            raise AttributeError('Didn\'t find any classes extending BaseProvider in {}'.format(module_name))
 
         if len(providers) > 1:
-            raise AttributeError(
-                'Found multiple classes extending BaseProvider in {}'
-                .format(module_name)
-            )
+            raise AttributeError('Found multiple classes extending BaseProvider in {}'.format(module_name))
 
         return providers[0]
 
     except (ModuleNotFoundError, AttributeError) as e:
-        raise InvalidSecretProvider(
-            'Secret Provider for "{}" is not available: {}'.format(
-                secret_provider, e
-            )
-        )
+        raise InvalidSecretProvider('Secret Provider for "{}" is not available: {}'.format(secret_provider, e))
 
 
 def load_client(provider):
@@ -121,16 +104,10 @@ def load_client(provider):
                 providers.append(obj)
 
         if len(providers) == 0:
-            raise AttributeError(
-                'Didn\'t find any classes extending object in {}'
-                .format(module_name)
-            )
+            raise AttributeError('Didn\'t find any classes extending object in {}'.format(module_name))
 
         if len(providers) > 1:
-            raise AttributeError(
-                'Found multiple classes extending object in {}'
-                .format(module_name)
-            )
+            raise AttributeError('Found multiple classes extending object in {}'.format(module_name))
 
         return providers[0]
 

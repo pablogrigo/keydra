@@ -1,34 +1,28 @@
+import json
+from typing import Dict, NamedTuple, Optional
+
 import boto3
 import boto3.session
-import json
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
-
-from keydra.exceptions import DistributionException
-
-from typing import Dict, NamedTuple, Optional
-from keydra.exceptions import RotationException
 
 from keydra.clients.aws.secretsmanager import SecretsManagerClient
-
-from keydra.clients.aws.ssmparameterstore import SSMClient
 from keydra.clients.aws.ssmparameterstore import PutParameterException
-
+from keydra.clients.aws.ssmparameterstore import SSMClient
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
 from keydra.logging import get_logger
-
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
 
 class SSMParameterProvider(BaseProvider):
-    def __init__(
-            self,
-            session=None,
-            client: SSMClient = None,
-            region_name=None,
-            # credentials must be present for the loader to init the provider
-            credentials=None):
+    def __init__(self,
+                 session=None,
+                 client: SSMClient = None,
+                 region_name=None,
+                 # credentials must be present for the loader to init the provider
+                 credentials=None):
         if session is None:  # pragma: no cover
             session = boto3.session.Session()
 
@@ -129,9 +123,9 @@ class SSMParameterProvider(BaseProvider):
             self._generate_secret_value(options)
 
         self._client.put_parameter_securestring(
-                param_name=spec['key'],
-                param_value=json.dumps(current_secret),
-                description=''
+            param_name=spec['key'],
+            param_value=json.dumps(current_secret),
+            description=''
         )
         return current_secret
 

@@ -1,10 +1,6 @@
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
-
-from keydra.clients.contentful import ContentfulClient
-from keydra.clients.contentful import ConnectionException
 
 from contentful_management import Client
 from contentful_management.array import Array
@@ -12,6 +8,9 @@ from contentful_management.personal_access_token import (
     PersonalAccessToken as PAT
 )
 from contentful_management.spaces_proxy import SpacesProxy
+
+from keydra.clients.contentful import ConnectionException
+from keydra.clients.contentful import ContentfulClient
 
 CREDS = {
     "provider": "contentful",
@@ -29,8 +28,8 @@ class TestContentfulClient(unittest.TestCase):
         mk_spaces.return_value = Array(json={}, items={})
 
         cf_client = ContentfulClient(
-                token=CREDS['key']
-            )
+            token=CREDS['key']
+        )
 
         self.assertEqual(type(cf_client), ContentfulClient)
 
@@ -49,8 +48,8 @@ class TestContentfulClient(unittest.TestCase):
     def test__revoke_token(self, mk_client_init):
         mk_client_init.return_value = None
         cf = ContentfulClient(
-                token=CREDS['key']
-            )
+            token=CREDS['key']
+        )
         cf._client = MagicMock()
         cf._client.personal_access_tokens().revoke = MagicMock()
         cf.revoke_token('id')
@@ -63,8 +62,8 @@ class TestContentfulClient(unittest.TestCase):
     def test__get_tokens(self, mk_client_init):
         mk_client_init.return_value = None
         cf = ContentfulClient(
-                token=CREDS['key']
-            )
+            token=CREDS['key']
+        )
         cf._client = MagicMock()
         cf._client.personal_access_tokens().all = MagicMock()
         cf._client.personal_access_tokens().all.return_value = [
@@ -80,8 +79,8 @@ class TestContentfulClient(unittest.TestCase):
     def test__create_token_readonly(self, mk_client_init):
         mk_client_init.return_value = None
         cf = ContentfulClient(
-                token=CREDS['key']
-            )
+            token=CREDS['key']
+        )
         cf._client = MagicMock()
         cf._client.personal_access_tokens().create = MagicMock()
         cf._client.personal_access_tokens().create.return_value = PAT
@@ -100,8 +99,8 @@ class TestContentfulClient(unittest.TestCase):
     def test__create_token_readwrite(self, mk_client_init):
         mk_client_init.return_value = None
         cf = ContentfulClient(
-                token=CREDS['key']
-            )
+            token=CREDS['key']
+        )
         cf._client = MagicMock()
         cf._client.personal_access_tokens().create = MagicMock()
         cf._client.personal_access_tokens().create.return_value = PAT

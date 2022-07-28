@@ -2,7 +2,6 @@ import requests
 
 from requests.auth import HTTPBasicAuth
 
-
 API_URL = 'https://api.bitbucket.org/2.0'
 API_TEAM = '{}/teams'.format(API_URL)
 API_REPO = '{}/repositories'.format(API_URL)

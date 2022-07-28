@@ -1,20 +1,16 @@
 import copy
 import json
+
 import yaml
 
 from keydra.clients.github import GithubClient
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import ConfigProvider
-
-from keydra.providers.base import exponential_backoff_retry
-
 from keydra.exceptions import ConfigException
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
-
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import ConfigProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
@@ -48,9 +44,9 @@ class Client(BaseProvider):
 
         except Exception as e:  # pragma: no cover
             LOGGER.warn('Failed to distribute secret to Github repo {}: {}'.format(
-                    config['repository'],
-                    e
-                )
+                config['repository'],
+                e
+            )
             )
             raise DistributionException(e)
 

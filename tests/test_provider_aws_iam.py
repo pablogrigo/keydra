@@ -1,18 +1,14 @@
 import unittest
+from datetime import datetime
+from datetime import timedelta
+from unittest.mock import MagicMock
+from unittest.mock import call
+from unittest.mock import patch
 
 from botocore.exceptions import ClientError
 
-from datetime import datetime
-from datetime import timedelta
-
-from keydra.providers import aws_iam
-
 from keydra.exceptions import DistributionException
-
-from unittest.mock import call
-from unittest.mock import MagicMock
-from unittest.mock import patch
-
+from keydra.providers import aws_iam
 
 IAM_SECRET = {
     'key': 'secret_key',
@@ -385,14 +381,14 @@ class TestProviderAWSIAM(unittest.TestCase):
         provider._client.detach_user_policy.assert_not_called()
         provider._client.attach_user_policy.assert_not_called()
 
-    @ patch.object(aws_iam.Client, '_fetch_access_keys')
-    @ patch.object(aws_iam.Client, '_pick_best_candidate')
-    @ patch.object(aws_iam.Client, '_delete_access_key')
-    @ patch.object(aws_iam.Client, '_update_access_key')
-    @ patch.object(aws_iam.Client, '_update_user_group_membership')
-    @ patch.object(aws_iam.Client, '_create_access_key')
+    @patch.object(aws_iam.Client, '_fetch_access_keys')
+    @patch.object(aws_iam.Client, '_pick_best_candidate')
+    @patch.object(aws_iam.Client, '_delete_access_key')
+    @patch.object(aws_iam.Client, '_update_access_key')
+    @patch.object(aws_iam.Client, '_update_user_group_membership')
+    @patch.object(aws_iam.Client, '_create_access_key')
     def test_rotate(
-        self, mk_cak, mk_uugm, mk_uak, mk_dak, mk_pbc, mk_fak
+            self, mk_cak, mk_uugm, mk_uak, mk_dak, mk_pbc, mk_fak
     ):
         cli = aws_iam.Client(session=MagicMock())
         cli._client = MagicMock()

@@ -1,14 +1,12 @@
 import unittest
-from keydra.clients.aws.secretsmanager import SecretsManagerClient
-from keydra.clients.salesforce_marketing_cloud import SalesforceMarketingCloudClient
-
-from keydra.providers import salesforce_marketing_cloud
-
-from keydra.exceptions import ConfigException, DistributionException
-from keydra.exceptions import RotationException
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
+
+from keydra.clients.aws.secretsmanager import SecretsManagerClient
+from keydra.clients.salesforce_marketing_cloud import SalesforceMarketingCloudClient
+from keydra.exceptions import ConfigException, DistributionException
+from keydra.exceptions import RotationException
+from keydra.providers import salesforce_marketing_cloud
 
 SFMC_CREDS = {
     "provider": "salesforce_marketing_cloud",

@@ -1,13 +1,12 @@
 import copy
 
 from botocore.exceptions import ClientError
+
 from keydra import loader
-
 from keydra import logging as km_logging
-from keydra.config import KeydraConfig
-
-from keydra.exceptions import ConfigException, InvalidSecretProvider
 from keydra.clients.aws.cloudwatch import CloudwatchClient, timed
+from keydra.config import KeydraConfig
+from keydra.exceptions import ConfigException, InvalidSecretProvider
 
 LOGGER = km_logging.get_logger()
 
@@ -290,8 +289,7 @@ class Keydra(object):
             elif result['rotate_secret']['status'] == 'fail':
                 failed_rotations += 1
 
-            for dresult in \
-                    result.get('distribute_secret', {}).get('value', []):
+            for dresult in result.get('distribute_secret', {}).get('value', []):
                 if dresult['status'] == 'success':
                     successful_distributions += 1
 

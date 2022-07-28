@@ -1,11 +1,9 @@
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from keydra.clients.salesforce import SalesforceClient
 from keydra.clients.salesforce import ValidationException
-
 
 SF_CREDS = {
     "provider": "salesforce",
@@ -22,11 +20,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__userid_except(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
 
         with self.assertRaises(Exception):
@@ -36,11 +34,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__userid_email_invalid(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
 
         with self.assertRaises(ValidationException):
@@ -50,11 +48,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__userid_two_results(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
         sf_client._client.query.return_value = {'totalSize': 2}
 
@@ -65,11 +63,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__userid_success(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
         sf_client._client.query.return_value = {
             'totalSize': 1, 'records': [{'Id': '1234'}]
@@ -82,11 +80,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__changepw_success(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
         sf_client._base_url = MagicMock()
         sf_client._client._call_salesforce.return_value.status_code = 200
@@ -98,11 +96,11 @@ class TestSalesforceClient(unittest.TestCase):
     def test__changepw_fail(self, mk_client_init):
         mk_client_init.return_value = None
         sf_client = SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain=SF_CREDS['domain']
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain=SF_CREDS['domain']
+        )
         sf_client._client = MagicMock()
         sf_client._base_url = MagicMock()
         sf_client._client._call_salesforce.return_value.status_code = 400
@@ -113,11 +111,11 @@ class TestSalesforceClient(unittest.TestCase):
     @patch('keydra.clients.salesforce.Salesforce')
     def test__connect_prod(self, mk_sf):
         SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain='prod'
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain='prod'
+        )
 
         mk_sf.assert_called_once_with(
             domain=None,
@@ -129,11 +127,11 @@ class TestSalesforceClient(unittest.TestCase):
     @patch('keydra.clients.salesforce.Salesforce')
     def test__connect_dev(self, mk_sf):
         SalesforceClient(
-                username=SF_CREDS['key'],
-                password=SF_CREDS['secret'],
-                token=SF_CREDS['token'],
-                domain='test'
-            )
+            username=SF_CREDS['key'],
+            password=SF_CREDS['secret'],
+            token=SF_CREDS['token'],
+            domain='test'
+        )
 
         mk_sf.assert_called_once_with(
             domain='test',

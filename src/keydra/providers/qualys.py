@@ -1,18 +1,15 @@
-import boto3
-import boto3.session
 import json
 
-from keydra.clients.qualys import QualysClient
+import boto3
+import boto3.session
 
 from keydra import loader
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
-
+from keydra.clients.qualys import QualysClient
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
@@ -119,7 +116,7 @@ class Client(BaseProvider):
                 ", ".join(req_keys)
             )
 
-        return True, 'It is valid!'     # pragma: no cover
+        return True, 'It is valid!'  # pragma: no cover
 
     @classmethod
     def redact_result(cls, result, spec=None):

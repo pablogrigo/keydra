@@ -1,17 +1,13 @@
 import unittest
-
-from keydra.providers import cloudflare
+from unittest.mock import MagicMock
+from unittest.mock import call
+from unittest.mock import patch
 
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
-from unittest.mock import call
-from unittest.mock import MagicMock
-from unittest.mock import patch
-
+from keydra.providers import cloudflare
 
 CF_CREDS = {'manage_tokens.secret': 'pass'}
-
 
 CF_SECRET_ALL = {
     'key': 'all',

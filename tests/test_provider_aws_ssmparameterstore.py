@@ -1,12 +1,10 @@
 import json
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
-from keydra.exceptions import DistributionException, RotationException
-
 from keydra.clients.aws.ssmparameterstore import PutParameterException, GetParameterException
+from keydra.exceptions import DistributionException, RotationException
 from keydra.providers.aws_ssmparameterstore import SSMParameterProvider
 
 IAM_SECRET = {

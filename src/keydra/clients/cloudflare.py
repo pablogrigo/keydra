@@ -1,6 +1,5 @@
 import requests
 
-
 API_URL = 'https://api.cloudflare.com/client/v4'
 API_TOKENS = '{}/user/tokens'.format(API_URL)
 

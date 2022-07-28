@@ -1,19 +1,16 @@
 from typing import FrozenSet, List
+
 import boto3
 import boto3.session
-
 from botocore.exceptions import ClientError
+from mypy_boto3_iam.client import IAMClient
 from mypy_boto3_iam.type_defs import TagTypeDef
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
 
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
-from mypy_boto3_iam.client import IAMClient
-
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
@@ -223,12 +220,7 @@ class Client(BaseProvider):
                 )
 
             except ClientError as e:  # pragma: no cover
-                LOGGER.warn(
-                    'Not able to add user "{}" to group "{}": {}'
-                    .format(
-                        iam_user, group, e
-                    )
-                )
+                LOGGER.warn('Not able to add user "{}" to group "{}": {}'.format(iam_user, group, e))
 
     def _make_policy_arn(self, policy_name_with_path: str) -> str:
         return f'arn:aws:iam::{self._get_aws_account_id()}:policy/{policy_name_with_path}'
@@ -243,7 +235,7 @@ class Client(BaseProvider):
                 f'Detached policy {policy_arn} from user {username}')
         except ClientError as e:  # pragma: no cover
             LOGGER.warn(
-                    f'Failed detaching policy {policy_arn} from user {username}: {e}')
+                f'Failed detaching policy {policy_arn} from user {username}: {e}')
 
     def _attach_policy_to_user(self, policy_arn: str, username: str):
         try:
@@ -255,29 +247,24 @@ class Client(BaseProvider):
                 f'Attached policy {policy_arn} to user {username}')
         except ClientError as e:  # pragma: no cover
             LOGGER.warn(
-                    f'Failed attaching policy {policy_arn} to user {username}: {e}')
+                f'Failed attaching policy {policy_arn} to user {username}: {e}')
 
-    def _update_user_policies(
-            self, username, expected_policies: FrozenSet[str]):
-
+    def _update_user_policies(self, username, expected_policies: FrozenSet[str]):
         expected_policy_arns: FrozenSet[str] = frozenset({
-            self._make_policy_arn(p) for p in expected_policies})
+            self._make_policy_arn(p) for p in expected_policies
+        })
 
-        LOGGER.debug(
-            f'Expected policies for IAM user {username}: {expected_policy_arns}')
+        LOGGER.debug(f'Expected policies for IAM user {username}: {expected_policy_arns}')
 
         try:
             current_policy_arns: FrozenSet[str] = frozenset([
                 p.get('PolicyArn', None)
-                for p in self._client.list_attached_user_policies(
-                    UserName=username)['AttachedPolicies']])
+                for p in self._client.list_attached_user_policies(UserName=username)['AttachedPolicies']])
         except ClientError as e:  # pragma: no cover
-            LOGGER.warn(
-                f'Failed to fetch managed policies attached to IAM user {username}: {e}')
+            LOGGER.warn(f'Failed to fetch managed policies attached to IAM user {username}: {e}')
             return
 
-        LOGGER.debug(
-            f'Current policies for IAM user {username}: {current_policy_arns}')
+        LOGGER.debug(f'Current policies for IAM user {username}: {current_policy_arns}')
 
         union_policy_arns = expected_policy_arns | current_policy_arns
 
@@ -290,8 +277,7 @@ class Client(BaseProvider):
     @exponential_backoff_retry(3)
     def rotate(self, secret):
         try:
-            self._create_user_if_not_available(
-                secret['key'], secret.get('config'))
+            self._create_user_if_not_available(secret['key'], secret.get('config'))
 
             keys_by_id = self._fetch_access_keys(secret['key'])
 
@@ -317,12 +303,9 @@ class Client(BaseProvider):
                     active=False
                 )
 
-            self._update_user_group_membership(
-                secret['key'], secret.get('config', {}).get('groups', [])
-            )
+            self._update_user_group_membership(secret['key'], secret.get('config', {}).get('groups', []))
 
-            self._update_user_policies(secret['key'], frozenset(secret.get(
-                'config', {}).get('policies', [])))
+            self._update_user_policies(secret['key'], frozenset(secret.get('config', {}).get('policies', [])))
 
             return _explain_secret(self._create_access_key(secret['key']))
 
@@ -358,9 +341,7 @@ class Client(BaseProvider):
             unknown_vals = spec['config'].keys() - allowed_options.keys()
 
             if unknown_vals:
-                return (False,
-                        'Unsupported values in provider config: {}'
-                        .format(unknown_vals))
+                return False, 'Unsupported values in provider config: {}'.format(unknown_vals)
 
             return True, 'All good!'
 

@@ -1,13 +1,10 @@
 import unittest
-
-from keydra.providers import splunk_hec
-
-from keydra.exceptions import DistributionException
-from keydra.exceptions import RotationException
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
+from keydra.providers import splunk_hec
 from keydra.providers.splunk_hec import PW_FIELD
 
 SPLUNK_CREDS = {
@@ -85,7 +82,7 @@ DEST = {
 class TestProviderSplunkHEC(unittest.TestCase):
     @patch('json.loads')
     @patch.object(splunk_hec, 'SplunkClient')
-    def test__rotate_hec(self,  mk_splunk, mk_loads):
+    def test__rotate_hec(self, mk_splunk, mk_loads):
         cli = splunk_hec.Client(
             credentials=HEC_SM_SECRET,
             session=MagicMock(),
@@ -99,7 +96,7 @@ class TestProviderSplunkHEC(unittest.TestCase):
 
     @patch('json.loads')
     @patch.object(splunk_hec, 'SplunkClient')
-    def test__rotate_hec_cloud(self,  mk_splunk, mk_loads):
+    def test__rotate_hec_cloud(self, mk_splunk, mk_loads):
         cli = splunk_hec.Client(
             credentials=HEC_SM_SECRET,
             session=MagicMock(),
@@ -113,7 +110,7 @@ class TestProviderSplunkHEC(unittest.TestCase):
 
     @patch('json.loads')
     @patch.object(splunk_hec, 'SplunkClient')
-    def test__rotate_hec_fail(self,  mk_splunk, mk_loads):
+    def test__rotate_hec_fail(self, mk_splunk, mk_loads):
         cli = splunk_hec.Client(
             credentials=HEC_SM_SECRET,
             session=MagicMock(),

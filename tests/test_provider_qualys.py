@@ -1,24 +1,22 @@
-import unittest
 import json
-
-from keydra.providers import qualys
-
-from keydra.exceptions import DistributionException
-from keydra.exceptions import RotationException
-
+import unittest
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
+from keydra.providers import qualys
+
 CREDS = {
-  "platform": "US3",
-  "username": "user",
-  "password": "pass",
+    "platform": "US3",
+    "username": "user",
+    "password": "pass",
 }
 
 OP_CREDS = {
-  "platform": "US3",
-  "username": "user2",
-  "password": "pass2",
+    "platform": "US3",
+    "username": "user2",
+    "password": "pass2",
 }
 
 SPEC = {
@@ -121,7 +119,7 @@ class TestProviderQualys(unittest.TestCase):
         r_result_1 = qualys.Client.validate_spec(SPEC)
 
         self.assertEqual(r_result_1, (True,
-                         'It is valid!'))
+                                      'It is valid!'))
 
     @patch.object(qualys, 'loader')
     @patch.object(qualys, 'json')
@@ -164,7 +162,7 @@ class TestProviderQualys(unittest.TestCase):
 
         r_result = qualys.Client.validate_spec(spec_no_cfg)
         self.assertEqual(r_result, (False,
-                         '"config" stanza must include keys key, provider'))
+                                    '"config" stanza must include keys key, provider'))
 
     def test_validate_spec_fail2(self):
         spec_no_key = {

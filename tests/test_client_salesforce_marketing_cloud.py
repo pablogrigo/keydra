@@ -1,5 +1,4 @@
 import unittest
-
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
@@ -65,9 +64,9 @@ class TestSalesforceMarketingClient(unittest.TestCase):
         }
 
         result = self.sfmc_client.change_passwd(
-                TEST_DATA['username'],
-                TEST_DATA['newpass']
-            )
+            TEST_DATA['username'],
+            TEST_DATA['newpass']
+        )
         self.assertTrue(result)
 
     @patch.object(SalesforceMarketingCloudClient, 'get_sfmc_status')

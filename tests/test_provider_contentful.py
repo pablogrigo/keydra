@@ -1,16 +1,14 @@
 import unittest
-
-from keydra.providers import contentful
-
-from keydra.exceptions import DistributionException
-from keydra.exceptions import RotationException
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from contentful_management.personal_access_token import (
     PersonalAccessToken as PAT
 )
 
-from unittest.mock import MagicMock
-from unittest.mock import patch
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
+from keydra.providers import contentful
 
 CREDS = {
     "provider": "contentful",

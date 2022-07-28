@@ -1,19 +1,15 @@
 import copy
 import unittest
-
-from keydra.providers import bitbucket
+from unittest.mock import MagicMock
+from unittest.mock import call
+from unittest.mock import patch
 
 from keydra.exceptions import ConfigException
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
-from unittest.mock import call
-from unittest.mock import MagicMock
-from unittest.mock import patch
-
+from keydra.providers import bitbucket
 
 BB_CREDS = {'username': 'user', 'password': 'pass'}
-
 
 IAM_SECRET = {
     'key': 'secret_key',

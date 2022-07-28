@@ -1,7 +1,7 @@
-import app
 import unittest
-
 from unittest.mock import MagicMock, patch
+
+import app
 
 
 class TestLambda(unittest.TestCase):

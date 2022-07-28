@@ -1,13 +1,11 @@
-import unittest
 import json
-
-from keydra.providers import splunk
+import unittest
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
-from unittest.mock import MagicMock
-from unittest.mock import patch
+from keydra.providers import splunk
 
 SPLUNK_CREDS = {
     "username": "admin_key",
@@ -24,14 +22,13 @@ SPLUNK_SPEC = {
     'rotate': 'nightly'
 }
 
-
 SF_CREDS = {
-  "provider": "salesforce",
-  "key": "splunk.api@corp.com.au.dev11",
-  "secret": "abcdefghijklmnopqrstuvwxyz1234567890",
-  "token": "abcdefghijklmnopqrstuvwxyz",
-  "env": "dev11",
-  "domain": "test"
+    "provider": "salesforce",
+    "key": "splunk.api@corp.com.au.dev11",
+    "secret": "abcdefghijklmnopqrstuvwxyz1234567890",
+    "token": "abcdefghijklmnopqrstuvwxyz",
+    "env": "dev11",
+    "domain": "test"
 }
 
 DEST = {
@@ -59,7 +56,7 @@ DEST = {
 
 class TestProviderSplunk(unittest.TestCase):
     @patch.object(splunk, 'SplunkClient')
-    def test__rotate_account_one_dest(self,  mk_splunk):
+    def test__rotate_account_one_dest(self, mk_splunk):
         cli = splunk.Client(credentials=SPLUNK_CREDS, session=MagicMock(),
                             region_name='ap-southeast-2', verify=False)
         cli._smclient = MagicMock()
@@ -71,7 +68,7 @@ class TestProviderSplunk(unittest.TestCase):
         self.assertEqual(mk_splunk().change_passwd.call_count, 1)
 
     @patch.object(splunk, 'SplunkClient')
-    def test__rotate_token(self,  mk_splunk):
+    def test__rotate_token(self, mk_splunk):
         cli = splunk.Client(credentials=SPLUNK_CREDS, session=MagicMock(),
                             region_name='ap-southeast-2', verify=False)
         cli._smclient = MagicMock()
@@ -129,8 +126,8 @@ class TestProviderSplunk(unittest.TestCase):
         r_result = splunk.Client.validate_spec(spec_bad_domain)
 
         self.assertEqual(r_result, (False,
-                         'Host {} must be a valid IP or domain name'.format(
-                            spec_bad_domain['config']['host'])))
+                                    'Host {} must be a valid IP or domain name'.format(
+                                        spec_bad_domain['config']['host'])))
 
     def test_validate_spec_bad_ip(self):
         spec_bad_ip = {
@@ -146,8 +143,8 @@ class TestProviderSplunk(unittest.TestCase):
         r_result_1 = splunk.Client.validate_spec(spec_bad_ip)
 
         self.assertEqual(r_result_1, (False,
-                         'Host {} must be a valid IP or domain name'.format(
-                                            spec_bad_ip['config']['host'])))
+                                      'Host {} must be a valid IP or domain name'.format(
+                                          spec_bad_ip['config']['host'])))
 
     @patch.object(splunk, 'SplunkClient')
     def test__rotate_except(self, mk_splunk):

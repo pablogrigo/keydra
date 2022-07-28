@@ -1,10 +1,10 @@
 import json
-import time
-import math
 import random
-
+import time
 from abc import ABC
 from abc import abstractmethod
+
+import math
 
 from keydra.exceptions import ConfigException
 
@@ -51,6 +51,7 @@ def exponential_backoff_retry(attempts: int, delay: float = 2, max_random: float
                 raise exc
 
         return retry
+
     return decorator
 
 

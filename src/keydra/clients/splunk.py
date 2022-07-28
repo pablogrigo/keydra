@@ -1,17 +1,13 @@
 import json
-import requests
 import time
-
-import splunklib.client as splunkclient
-
 import urllib.parse as urlparse
 
+import requests
+import splunklib.client as splunkclient
 from splunklib.binding import HTTPError
 
 from keydra.logging import get_logger
-
 from keydra.providers.base import exponential_backoff_retry
-
 
 LOGGER = get_logger()
 ADMIN_API = 'https://admin.splunk.com'
@@ -185,8 +181,8 @@ class SplunkClient(object):
         # See if this storage password exists already
         try:
             self._service.get(
-                    '/servicesNS/nobody/{}/'
-                    'storage/passwords/{}'.format(app, storepass)
+                '/servicesNS/nobody/{}/'
+                'storage/passwords/{}'.format(app, storepass)
             )
             exists = True
 
@@ -196,7 +192,7 @@ class SplunkClient(object):
                 exists = False
             else:
                 # We have another error, re-raise it
-                raise(e)
+                raise (e)
 
         if exists:
             # Storage password already exists, we'll update
@@ -335,9 +331,9 @@ class SplunkClient(object):
         inputs = json.loads(response['body'].read())
 
         for entry in inputs['entry']:
-            if entry['name'] == 'http://'+inputname:
+            if entry['name'] == 'http://' + inputname:
                 rotresp = self._service.post(
-                    urlparse.unquote(entry['links']['edit']+'/rotate'),
+                    urlparse.unquote(entry['links']['edit'] + '/rotate'),
                     output_mode='json'
                 )
                 newconfig = json.loads(rotresp['body'].read())['entry'][0]
@@ -415,10 +411,10 @@ class SplunkClient(object):
             status = json.loads(statusresp)['entry'][0]
 
             LOGGER.debug("Task {} is currently '{}' after {} seconds.".format(
-                    id,
-                    status['content']['state'],
-                    attempt
-                )
+                id,
+                status['content']['state'],
+                attempt
+            )
             )
             if status['content']['state'] == 'completed':
                 LOGGER.info("Deployment task {} completed in {} seconds.".format(id, attempt))

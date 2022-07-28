@@ -1,6 +1,6 @@
-import validators
 import json
 
+import validators
 from simple_salesforce import Salesforce
 
 
@@ -24,11 +24,11 @@ class SalesforceClient(object):
             domain = None
 
         self._client = Salesforce(
-                username=username,
-                password=password,
-                security_token=token,
-                domain=domain
-            )
+            username=username,
+            password=password,
+            security_token=token,
+            domain=domain
+        )
 
         self._base_url = 'https://{}/services/data/v{}/sobjects'.format(
             self._client.sf_instance,

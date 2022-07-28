@@ -1,20 +1,16 @@
 import copy
 import json
+
 import yaml
 
 from keydra.clients.bitbucket import BitbucketClient
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import ConfigProvider
-
-from keydra.providers.base import exponential_backoff_retry
-
 from keydra.exceptions import ConfigException
 from keydra.exceptions import DistributionException
 from keydra.exceptions import RotationException
-
 from keydra.logging import get_logger
-
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import ConfigProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
@@ -111,14 +107,12 @@ class Client(BaseProvider):
             if config.get('create', False) is False:
                 raise DistributionException(
                     'Environment with slug "{}" not present in Bitbucket for '
-                    'repo: {} and is not configured to create. Aborting!'
-                    .format(environment, config['repository'])
+                    'repo: {} and is not configured to create. Aborting!'.format(environment, config['repository'])
                 )
 
             LOGGER.info(
                 'Environment with slug "{}" not present in Bitbucket for '
-                'repo: {}, attempting to create!'.format(
-                    environment, config['repository'])
+                'repo: {}, attempting to create!'.format(environment, config['repository'])
             )
 
             new_env = self._client.add_repo_environment(
@@ -134,8 +128,7 @@ class Client(BaseProvider):
 
         if not env_uuid:  # pragma: no cover
             raise DistributionException(
-                'Not able to get (or create) environment "{}" under "{}" '
-                .format(environment, config['repository'])
+                'Not able to get (or create) environment "{}" under "{}" '.format(environment, config['repository'])
             )
 
         return env_uuid, environment

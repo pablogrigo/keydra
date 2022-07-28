@@ -1,15 +1,13 @@
-import unittest
 import json
-from keydra.clients.aws.secretsmanager import SecretsManagerClient
-from keydra.clients.salesforce import SalesforceClient
-
-from keydra.providers import salesforce
-
-from keydra.exceptions import DistributionException
-from keydra.exceptions import RotationException
-
+import unittest
 from unittest.mock import MagicMock
 from unittest.mock import patch
+
+from keydra.clients.aws.secretsmanager import SecretsManagerClient
+from keydra.clients.salesforce import SalesforceClient
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
+from keydra.providers import salesforce
 
 SF_CREDS = {
     "provider": "salesforce",
@@ -188,7 +186,7 @@ class TestProviderSalesforce(unittest.TestCase):
         r_result_1 = salesforce.Client.validate_spec(SF_SPEC)
 
         self.assertEqual(r_result_1, (True,
-                         'It is valid!'))
+                                      'It is valid!'))
 
     def test__validate_spec_known_config_fields(self):
         result = salesforce.Client.validate_spec(
@@ -200,14 +198,14 @@ class TestProviderSalesforce(unittest.TestCase):
             }})
 
         self.assertEqual(result, (True,
-                         'It is valid!'))
+                                  'It is valid!'))
 
     def test__validate_spec_unknown_config_fields(self):
         result = salesforce.Client.validate_spec(
             {**SF_SPEC, 'config': {'field1': 'a', 'field2': 'b'}})
 
         self.assertEqual(result, (False,
-                         'Unknown config fields: field1, field2'))
+                                  'Unknown config fields: field1, field2'))
 
     @patch.object(salesforce, 'SalesforceClient')
     def test__distribute_exception(self, mk_sf_client):

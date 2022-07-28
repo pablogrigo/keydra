@@ -1,7 +1,7 @@
-import requests
-import xmltodict
 from collections import OrderedDict
 
+import requests
+import xmltodict
 
 # https://www.qualys.com/platform-identification/
 API_URL = {
@@ -73,12 +73,12 @@ class QualysClient(object):
         api_url = '{}/{}'.format(self._baseurl, url)
 
         response = requests.request(
-                "GET",
-                api_url,
-                headers=self._headers,
-                params=params,
-                auth=(self._user, self._pass)
-            )
+            "GET",
+            api_url,
+            headers=self._headers,
+            params=params,
+            auth=(self._user, self._pass)
+        )
         error_msg = None
 
         if response.status_code == 200:
@@ -136,7 +136,7 @@ class QualysClient(object):
         )['PASSWORD_CHANGE_OUTPUT']
 
         try:
-            return(resp['RETURN']['CHANGES']['USER_LIST']['USER']['PASSWORD'])
+            return (resp['RETURN']['CHANGES']['USER_LIST']['USER']['PASSWORD'])
 
         except Exception:
             raise PasswordChangeException(

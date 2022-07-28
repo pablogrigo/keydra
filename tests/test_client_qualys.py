@@ -1,16 +1,16 @@
 import unittest
-
-from unittest.mock import patch
 from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from requests import Response
+
 from keydra.clients import qualys
 
 CREDS = {
-  "platform": "US3",
-  "username": "user",
-  "password": "pass",
-  "rotatewith": "secrettwo"
+    "platform": "US3",
+    "username": "user",
+    "password": "pass",
+    "rotatewith": "secrettwo"
 }
 
 XML_RESP_PWCHG = b'''<?xml version="1.0" encoding="UTF-8" ?>
@@ -48,7 +48,7 @@ XML_RESP_EXPIRED = b'''<?xml version="1.0" encoding="UTF-8" ?>
 
 class TestQualysClient(unittest.TestCase):
     @patch.object(qualys.requests, 'request')
-    def test__init(self,  mk_req):
+    def test__init(self, mk_req):
         resp = Response()
         resp.status_code = 200
         resp._content = XML_RESP_USERLIST
@@ -65,14 +65,14 @@ class TestQualysClient(unittest.TestCase):
             'https://qualysapi.qg3.apps.qualys.com/msp/user_list.php',
             auth=('user', 'pass'),
             headers={
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             params=None
         )
 
     @patch.object(qualys.requests, 'request')
-    def test__init_fail(self,  mk_req):
+    def test__init_fail(self, mk_req):
         resp = Response()
         resp.status_code = 200
         resp._content = XML_RESP_USERLIST

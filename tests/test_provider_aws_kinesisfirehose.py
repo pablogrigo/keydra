@@ -1,12 +1,10 @@
-import uuid
 import unittest
-
-from keydra.exceptions import DistributionException, RotationException
-
-from keydra.providers import aws_kinesisfirehose
-
+import uuid
 from unittest.mock import MagicMock
 from unittest.mock import patch
+
+from keydra.exceptions import DistributionException, RotationException
+from keydra.providers import aws_kinesisfirehose
 
 SPLUNK_SECRET = {
     'hhecInputName': 'Test',
@@ -72,7 +70,7 @@ DEST_NO_CFG = {
 
 class TestProviderFirehose(unittest.TestCase):
     @patch.object(aws_kinesisfirehose, 'FirehoseClient')
-    def test__dist_splunk(self,  mk_hose):
+    def test__dist_splunk(self, mk_hose):
         cli = aws_kinesisfirehose.Client(
             session=MagicMock()
         )
@@ -81,7 +79,7 @@ class TestProviderFirehose(unittest.TestCase):
         self.assertEqual(mk_hose().update_splunk_hectoken.call_count, 1)
 
     @patch.object(aws_kinesisfirehose, 'FirehoseClient')
-    def test__dist_http(self,  mk_hose):
+    def test__dist_http(self, mk_hose):
         cli = aws_kinesisfirehose.Client(
             session=MagicMock()
         )
@@ -90,7 +88,7 @@ class TestProviderFirehose(unittest.TestCase):
         self.assertEqual(mk_hose().update_http_accesskey.call_count, 1)
 
     @patch.object(aws_kinesisfirehose, 'FirehoseClient')
-    def test__dist_unknown_dest(self,  mk_hose):
+    def test__dist_unknown_dest(self, mk_hose):
         cli = aws_kinesisfirehose.Client(
             session=MagicMock()
         )
@@ -106,7 +104,7 @@ class TestProviderFirehose(unittest.TestCase):
             cli.rotate(SPLUNK_SECRET)
 
     @patch.object(aws_kinesisfirehose, 'FirehoseClient')
-    def test__dist_unknown_stream(self,  mk_hose):
+    def test__dist_unknown_stream(self, mk_hose):
         cli = aws_kinesisfirehose.Client(
             session=MagicMock()
         )

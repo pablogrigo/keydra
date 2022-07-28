@@ -1,12 +1,9 @@
-import requests
 import json
-
+from base64 import b64encode
 from copy import deepcopy
 
-from base64 import b64encode
-
+import requests
 from nacl import encoding, public
-
 
 API_URL = 'https://api.github.com'
 

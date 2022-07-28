@@ -1,34 +1,29 @@
+import json
+from typing import Dict, NamedTuple, Optional
+
 import boto3
 import boto3.session
-import json
-
-from keydra.providers.base import BaseProvider
-from keydra.providers.base import exponential_backoff_retry
-
-from keydra.exceptions import DistributionException
-
-from typing import Dict, NamedTuple, Optional
-from keydra.exceptions import RotationException
 
 from keydra.clients.aws.secretsmanager import GetSecretException
 from keydra.clients.aws.secretsmanager import InsertSecretException
 from keydra.clients.aws.secretsmanager import SecretsManagerClient
 from keydra.clients.aws.secretsmanager import UpdateSecretException
-
+from keydra.exceptions import DistributionException
+from keydra.exceptions import RotationException
 from keydra.logging import get_logger
-
+from keydra.providers.base import BaseProvider
+from keydra.providers.base import exponential_backoff_retry
 
 LOGGER = get_logger()
 
 
 class SecretsManagerProvider(BaseProvider):
-    def __init__(
-            self,
-            session=None,
-            client: SecretsManagerClient = None,
-            region_name=None,
-            # credentials must be present for the loader to init the provider
-            credentials=None):
+    def __init__(self,
+                 session=None,
+                 client: SecretsManagerClient = None,
+                 region_name=None,
+                 # credentials must be present for the loader to init the provider
+                 credentials=None):
         if session is None:  # pragma: no cover
             session = boto3.session.Session()
 

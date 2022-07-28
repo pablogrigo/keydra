@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import MagicMock, call, patch
 
 import yaml
+
 from keydra.exceptions import ConfigException, DistributionException
 from keydra.providers.gitlab import Client
 

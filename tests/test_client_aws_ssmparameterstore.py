@@ -1,12 +1,10 @@
 import unittest
+from unittest.mock import MagicMock
 
 from botocore.exceptions import ClientError
 
-from keydra.clients.aws.ssmparameterstore import SSMClient
 from keydra.clients.aws.ssmparameterstore import GetParameterException, PutParameterException
-
-from unittest.mock import MagicMock
-
+from keydra.clients.aws.ssmparameterstore import SSMClient
 
 CLIENT_ERR = ClientError(
     error_response={'Error': {'Code': 'boom'}},

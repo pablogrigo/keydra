@@ -117,11 +117,11 @@ class Client(BaseProvider):
     def rotate(self, secret):
         raise RotationException("Not implemented for GitLab")
 
-    @ exponential_backoff_retry(3)
+    @exponential_backoff_retry(3)
     def distribute(self, secret, destination):
         return self._distribute(secret, destination)
 
-    @ classmethod
+    @classmethod
     def validate_spec(cls, spec):
         valid, msg = BaseProvider.validate_spec(spec)
         if not valid:
@@ -134,7 +134,7 @@ class Client(BaseProvider):
             LOGGER.warn(e)
             return False, str(e)
 
-    @ classmethod
+    @classmethod
     def pre_process_spec(self, spec, context: dict):
         specs = []
 
