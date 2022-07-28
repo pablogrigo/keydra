@@ -40,7 +40,8 @@ class KeydraConfig(object):
     def _fetch_current_account(self):
         return self._sts.get_caller_identity()['Account']
 
-    def _validate_spec(self, environments, secrets):
+    @staticmethod
+    def _validate_spec(environments, secrets):
         for env, env_desc in environments.items():
             for key in ENVS_SPEC:
                 if key not in env_desc:

@@ -65,7 +65,8 @@ class GithubClient(object):
 
         return json.loads(self._query(url))
 
-    def _encrypt_secret(self, secret, public_key):
+    @staticmethod
+    def _encrypt_secret(secret, public_key):
         '''
         Encrypt a secret string using the orgs public key
         https://docs.github.com/en/rest/reference/actions#create-or-update-an-organization-secret

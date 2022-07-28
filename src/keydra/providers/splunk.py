@@ -104,7 +104,8 @@ class Client(BaseProvider):
     def rotate(self, secret):
         return self._rotate_secret(secret)
 
-    def _dist_storepass(self, client, destination, data):
+    @staticmethod
+    def _dist_storepass(client, destination, data):
         try:
             result = client.update_app_storepass(
                 app=destination['config']['app'],
@@ -127,7 +128,8 @@ class Client(BaseProvider):
 
         return result
 
-    def _dist_custom(self, client, destination, data):
+    @staticmethod
+    def _dist_custom(client, destination, data):
         try:
             result = client.update_app_config(
                 app=destination['config']['app'],

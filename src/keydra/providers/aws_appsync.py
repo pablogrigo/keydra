@@ -29,7 +29,8 @@ class Client(BaseProvider):
             region_name=region_name
         )
 
-    def _get_days_from_occurrence(self, occurrence):
+    @staticmethod
+    def _get_days_from_occurrence(occurrence):
         # TODO: Move to publicly accessible place
         return {
             'nightly': 5,
@@ -38,7 +39,8 @@ class Client(BaseProvider):
             'monthly': 60
         }.get(occurrence, 30)
 
-    def _generate_expiry_epoch(self, days_from_today):
+    @staticmethod
+    def _generate_expiry_epoch(days_from_today):
         d = datetime.now() + timedelta(days=days_from_today)
         return int(d.timestamp())
 

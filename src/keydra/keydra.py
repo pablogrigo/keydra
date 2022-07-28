@@ -65,8 +65,7 @@ class Keydra(object):
             result['key'] = secret['key']
             result['provider'] = secret['provider']
 
-            result[r_result.pop('action')] = self._redact_secrets(
-                r_result, secret)
+            result[r_result.pop('action')] = self._redact_secrets(r_result, secret)
 
             if r_result['status'] == 'success' and 'distribute' in secret:
                 d_result = self._distribute_secret(secret, r_result['value'])
@@ -79,7 +78,8 @@ class Keydra(object):
 
         return resp
 
-    def _redact_secrets(self, result, spec):
+    @staticmethod
+    def _redact_secrets(result, spec):
         r_result = copy.deepcopy(result)
         provider = spec['provider']
 
@@ -207,7 +207,8 @@ class Keydra(object):
             )
             return self._fail(e)
 
-    def _default_response(self, status, action=None, msg=None, value=None):
+    @staticmethod
+    def _default_response(status, action=None, msg=None, value=None):
         response = {
             'status': status,
         }
