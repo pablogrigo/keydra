@@ -84,6 +84,7 @@ class SalesforceClient(object):
 
         params = {'NewPassword': newpassword}
 
+        # noinspection PyProtectedMember
         result = self._client._call_salesforce(
             'POST',
             url,
