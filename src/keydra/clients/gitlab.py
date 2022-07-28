@@ -10,12 +10,12 @@ API_URL = 'https://gitlab.com/'
 class GitlabClient:
 
     def __init__(self, access_token) -> None:
-        '''
+        """
         Initializes a client for Gitlab
 
         :param access_token: Project Access Token
         :type access_token: :class:`str`
-        '''
+        """
         self.gpc = GitlabPythonClient(API_URL, access_token)
         self.PROJECT_CACHE = {}
 
@@ -29,7 +29,7 @@ class GitlabClient:
         return key not in [project_var.key for project_var in pm.variables.list()]
 
     def set_repo_variable(self, repo_name, key, value) -> None:
-        '''
+        """
         Sets a variable for a specific repository. Creates new variable or updates existing.
 
         :param repo_name: Full repository name, including group(s) (my-group/my-repo)
@@ -38,7 +38,7 @@ class GitlabClient:
         :type key: :class:`str`
         :param value: Value for the variable in the repo
         :type value: :class:`str`
-        '''
+        """
         pm = self._get_project_manager(repo_name)
         if self._is_new_repo_variable(repo_name, key):
             LOGGER.info('{}: Creating variable {}...'.format(repo_name, key))
@@ -50,7 +50,7 @@ class GitlabClient:
             project_var.save()
 
     def fetch_file_from_repository(self, file_path, repo_name, repo_branch='main') -> str:
-        '''
+        """
         Reads file from repository.
 
         :param file_path: Path in repo, e.g. foo/bar/baz.yaml
@@ -61,7 +61,7 @@ class GitlabClient:
         :type repo_branch: :class:`str`
         :returns: Content of the file
         :rtype: :class:`str`
-        '''
+        """
         pm = self._get_project_manager(repo_name)
         encoded_file = pm.files.get(
             file_path=file_path,

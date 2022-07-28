@@ -39,7 +39,7 @@ def _merge_dicts(a, b, path=None):
 
 
 def _load_env_config():
-    '''
+    """
     Converts Keydra specific environment variables into a config dict.
 
     E.g.
@@ -55,7 +55,7 @@ def _load_env_config():
     ```
     {'first': {'a': 'firstA', 'b': 'firstB'}}
     ```
-    '''
+    """
     config = {}
     slicer = len(ENV_CONFIG_PREFIX) + 1
 
@@ -84,7 +84,7 @@ def _load_keydra_config():
 
 
 def lambda_handler(event, context):
-    '''
+    """
     AWS Lambda handler
 
     :param event: Event triggering this function
@@ -117,7 +117,7 @@ def lambda_handler(event, context):
         Function memory
 
         https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
-    '''
+    """
     trigger = event.get('trigger', 'nightly')
     run_for_secrets = event.get('secrets', None)
     debug_mode = event.get('debug', False)

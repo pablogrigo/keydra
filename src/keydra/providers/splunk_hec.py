@@ -35,7 +35,7 @@ class Client(BaseProvider):
         self._verify = verify
 
     def _rotate_secret(self, secret):
-        '''
+        """
         Rotate token for a HEC input on a single Spunk server
 
         :param secret: The spec from the secrets yaml
@@ -43,7 +43,7 @@ class Client(BaseProvider):
 
         :returns: New secret ready to distribute
         :rtype: :class:`dict`
-        '''
+        """
 
         host = secret['config']['host']
 

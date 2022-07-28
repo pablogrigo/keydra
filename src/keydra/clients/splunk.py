@@ -23,7 +23,7 @@ class TaskAlreadyInProgressException(Exception):
 
 class SplunkClient(object):
     def __init__(self, username, password, host, verify, port=8089):
-        '''
+        """
         Initializes a Splunk client
 
         :param username: Username used to connect
@@ -36,7 +36,7 @@ class SplunkClient(object):
         :type port: :class:`string`
         :param verify: Verify TLS
         :type verify: :class:`bool`
-        '''
+        """
         self.host = host
         self.port = port
 
@@ -78,7 +78,7 @@ class SplunkClient(object):
         resp.raise_for_status()
 
     def update_app_config(self, app, path, obj, data):
-        '''
+        """
         Updates the config of a Splunk app. Will create the
         config entry if it does not already exist.
 
@@ -93,7 +93,7 @@ class SplunkClient(object):
 
         :returns: Resulting HTTP status code of the operation
         :rtype: :class:`int`
-        '''
+        """
         # First check the app is actually installed!
         if self.app_exists(app) is not True:
             raise AppNotInstalledException(
@@ -148,7 +148,7 @@ class SplunkClient(object):
         return attempt.status
 
     def update_app_storepass(self, app, username, password, realm=None):
-        '''
+        """
         Updates a Splunk app storage password. Will create the
         config entry if it does not already exist.
 
@@ -161,7 +161,7 @@ class SplunkClient(object):
 
         :returns: Resulting HTTP status code of the operation
         :rtype: :class:`int`
-        '''
+        """
 
         # First check the app is actually installed!
         if self.app_exists(app) is not True:
@@ -220,7 +220,7 @@ class SplunkClient(object):
         return attempt.status
 
     def app_exists(self, appname):
-        '''
+        """
         Check if a Splunk app exists
 
         :param appname: The app name to check for
@@ -228,7 +228,7 @@ class SplunkClient(object):
 
         :returns: Result of check, True or False
         :rtype: :class:`bool`
-        '''
+        """
         matching_apps = len(
             self._service.apps.list(search='name={}'.format(appname))
         )
@@ -287,7 +287,7 @@ class SplunkClient(object):
             raise Exception(f'Error rotating token for user {username}. New token is invalid!')
 
     def change_passwd(self, username, oldpasswd, newpasswd):
-        '''
+        """
         Update a Splunk user account password
 
         :param username: The username of the account
@@ -299,7 +299,7 @@ class SplunkClient(object):
 
         :returns: True if successful
         :rtype: :class:`bool`
-        '''
+        """
         attempt = self._service.post(
             "/services/authentication/users/{}".format(username),
             password=newpasswd,
@@ -315,7 +315,7 @@ class SplunkClient(object):
         return True
 
     def rotate_hectoken(self, inputname):
-        '''
+        """
         Rotate a Splunk HEC token for Splunk Enterprise
 
         :param inputname: The name of the HTTP input
@@ -323,7 +323,7 @@ class SplunkClient(object):
 
         :returns: New token value if successful
         :rtype: :class:`string`
-        '''
+        """
         response = self._service.get(
             '/services/data/inputs/http',
             output_mode='json'
@@ -350,7 +350,7 @@ class SplunkClient(object):
         )
 
     def _get_splunkcloud_httpinput(self, inputname):
-        '''
+        """
         Get details for a Splunk HEC token on Splunk Cloud (Classic)
 
         :param inputname: The name of the HTTP input
@@ -358,7 +358,7 @@ class SplunkClient(object):
 
         :returns: Entry details, or an empty list if input not found
         :rtype: :class:`list`
-        '''
+        """
         getresp = self._service.get(
             '/services/dmc/config/inputs/__indexers/http/{}'.format(inputname),
             output_mode='json'
@@ -367,13 +367,13 @@ class SplunkClient(object):
         return json.loads(getresp)['entry']
 
     def _get_last_splunkcloud_deploytask(self):
-        '''
+        """
         Gets the last deployment task to be run on Splunk Cloud (Classic)
 
         :returns: Last deployment task Id
         :rtype: :class:`string`
 
-        '''
+        """
         taskresp = self._service.get(
             '/services/dmc/deploy',
             output_mode='json'
@@ -389,7 +389,7 @@ class SplunkClient(object):
             )
 
     def _wait_for_splunkcloud_task(self, id, timeout=240):
-        '''
+        """
         Wait for a Splunk Cloud (Classic) deployment task to complete
 
         :param id: The task Id to wait for
@@ -397,7 +397,7 @@ class SplunkClient(object):
         :param timeout: How many seconds to wait for before giving up
         :type timeout: :class:`int`
 
-        '''
+        """
         attempt = 1
         while attempt < timeout:
             try:
@@ -429,7 +429,7 @@ class SplunkClient(object):
 
     @exponential_backoff_retry(5, exception_type=TaskAlreadyInProgressException)
     def _delete_splunkcloud_httpinput(self, inputname):
-        '''
+        """
         Delete a Splunk HEC token on Splunk Cloud (Classic)
 
         :param inputname: The name of the HTTP input
@@ -438,7 +438,7 @@ class SplunkClient(object):
         :returns: Deployment task Id
         :rtype: :class:`string`
 
-        '''
+        """
         # Allow any existing in progress tasks to complete first
         self._wait_for_splunkcloud_task(id=self._get_last_splunkcloud_deploytask())
         try:
@@ -458,7 +458,7 @@ class SplunkClient(object):
 
     @exponential_backoff_retry(5, exception_type=TaskAlreadyInProgressException)
     def _create_splunkcloud_httpinput(self, inputname, inputconfig):
-        '''
+        """
         Create a Splunk HEC input on Splunk Cloud (Classic)
 
         :param inputname: The name of the HTTP input
@@ -469,7 +469,7 @@ class SplunkClient(object):
         :returns: Tuple of Deployment task Id and deployed configuration
         :rtype: :class:`tuple`
 
-        '''
+        """
         self._wait_for_splunkcloud_task(id=self._get_last_splunkcloud_deploytask())
         try:
             createresp = self._service.post(
@@ -493,7 +493,7 @@ class SplunkClient(object):
         return self._get_last_splunkcloud_deploytask(), response['entry'][0]
 
     def rotate_hectoken_cloud(self, inputname):
-        '''
+        """
         Rotate a Splunk HEC token on Splunk Cloud (Classic)
 
         Unfortunately you cannot rotate in place on Splunk Cloud, so we have
@@ -507,7 +507,7 @@ class SplunkClient(object):
         :returns: New token value if successful
         :rtype: :class:`string`
 
-        '''
+        """
         LOGGER.debug('Getting input details for {}'.format(inputname))
 
         inputs = self._get_splunkcloud_httpinput(inputname)

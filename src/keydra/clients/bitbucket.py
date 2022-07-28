@@ -9,14 +9,14 @@ API_REPO = '{}/repositories'.format(API_URL)
 
 class BitbucketClient(object):
     def __init__(self, user, passwd):
-        '''
+        """
         Initializes a client for Bitbucket
 
         :param user: Bitbucket username
         :type user: :class:`str`
         :param passwd: Bitbucket password
         :type passwd: :class:`passwd`
-        '''
+        """
         self._authorizer = HTTPBasicAuth(user, passwd)
 
     def _query(self, url):
@@ -79,7 +79,7 @@ class BitbucketClient(object):
         return entries
 
     def list_team_pipeline_variables(self, username):
-        '''
+        """
         Lists all "account level" variables in Bitbucket
 
         Note: this will list every single page of variables existing in the
@@ -89,7 +89,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A list of dictionaries describing variables (as per BB API)
         :rtype: :class:`list` of :class:`dict`
-        '''
+        """
         url = '{}/{}/pipelines_config/variables/'.format(API_TEAM, username)
 
         return self._fetch_all(url)
@@ -101,7 +101,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Adds an "account level" variable in Bitbucket
 
         :param key: Variable key (how it is going to be accessed)
@@ -114,7 +114,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: Description of the newly added variable (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/pipelines_config/variables/'.format(API_TEAM, username)
 
         payload = {
@@ -134,7 +134,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Updates an "account level" variable in Bitbucket
 
         :param uuid: UUID of the variable in Bitbucket
@@ -149,7 +149,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: Description of the updated variable (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/pipelines_config/variables/{}'.format(
             API_TEAM,
             username,
@@ -166,7 +166,7 @@ class BitbucketClient(object):
         return self._put(url, json=payload)
 
     def delete_team_pipeline_variable(self, uuid, username):
-        '''
+        """
         Deletes an "account level" variable in Bitbucket
 
         :param uuid: UUID of the variable in Bitbucket
@@ -175,7 +175,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: JSON response
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/pipelines_config/variables/{}'.format(
             API_TEAM,
             username,
@@ -185,7 +185,7 @@ class BitbucketClient(object):
         return self._delete(url)
 
     def list_repo_environments(self, repo_slug, username):
-        '''
+        """
         Lists all the environments configured for the given repository
 
         :param repo_slug: Slug of the repository to be queried
@@ -195,7 +195,7 @@ class BitbucketClient(object):
         :returns: A list of dictionaries describing environments
             (as per BB API)
         :rtype: :class:`list` of :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/environments/'.format(API_REPO, username, repo_slug)
 
         return self._fetch_all(url)
@@ -208,7 +208,7 @@ class BitbucketClient(object):
         env_type='Production',
         admin_locked=False,
     ):
-        '''
+        """
         Add new environments to the given repository
 
         :param repo_slug: Slug of the repository to be queried
@@ -223,7 +223,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A description of the added environment (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/environments/'.format(API_REPO, username, repo_slug)
 
         payload = {
@@ -250,7 +250,7 @@ class BitbucketClient(object):
         env_uuid,
         username
     ):
-        '''
+        """
         Lists all the deployment variables configured for a specific
         environments in the given repository
 
@@ -263,7 +263,7 @@ class BitbucketClient(object):
         :returns: A list of dictionaries describing environments
             (as per BB API)
         :rtype: :class:`list` of :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/deployments_config/environments/{}/variables'.format(
             API_REPO, username, repo_slug, env_uuid
         )
@@ -279,7 +279,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Add a new deployment variables configured for a specific environments
         in the given repository
 
@@ -297,7 +297,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A description of the variable added (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/deployments_config/environments/{}/variables'.format(
             API_REPO, username, repo_slug, env_uuid
         )
@@ -321,7 +321,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Updates an existing deployment variables configured for a specific
         environments in the given repository
 
@@ -341,7 +341,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A description of the variable added (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/deployments_config/environments/{}/variables/{}'.format(  # noqa
             API_REPO, username, repo_slug, env_uuid, var_uuid
         )
@@ -360,7 +360,7 @@ class BitbucketClient(object):
         repo_slug,
         username
     ):
-        '''
+        """
         Lists all the variables configured for a given repository
 
         :param repo_slug: Slug of the repository to be queried
@@ -370,7 +370,7 @@ class BitbucketClient(object):
         :returns: A list of dictionaries describing environments
             (as per BB API)
         :rtype: :class:`list` of :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/pipelines_config/variables/'.format(
             API_REPO, username, repo_slug
         )
@@ -385,7 +385,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Add a new variable for a specific repository
 
         :param repo_slug: Slug of the repository to be queried
@@ -400,7 +400,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A description of the variable added (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/pipelines_config/variables/'.format(
             API_REPO, username, repo_slug
         )
@@ -423,7 +423,7 @@ class BitbucketClient(object):
         username,
         secured=True,
     ):
-        '''
+        """
         Updates an existing deployment variables configured for a specific
         environments in the given repository
 
@@ -441,7 +441,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: A description of the variable added (as per BB API)
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/{}/{}/pipelines_config/variables/{}'.format(
             API_REPO, username, repo_slug, var_uuid
         )
@@ -461,7 +461,7 @@ class BitbucketClient(object):
         path,
         username
     ):
-        '''
+        """
         Reads file from Bitbucket
 
         *Notes*: Requires 'repository' privilege
@@ -474,7 +474,7 @@ class BitbucketClient(object):
         :type username: :class:`str`
         :returns: Content of the file
         :rtype: :class:`str`
-        '''
+        """
         url = '{}/{}/{}/{}'.format(API_REPO, username, repo, path)
 
         return self._query(url)

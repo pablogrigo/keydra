@@ -10,14 +10,14 @@ API_URL = 'https://api.github.com'
 
 class GithubClient(object):
     def __init__(self, user, passwd):
-        '''
+        """
         Initializes a client for Github
 
         :param user: Github username
         :type user: :class:`str`
         :param passwd: Github personal access token
         :type passwd: :class:`passwd`
-        '''
+        """
         self._authorizer = {
             'Content-Type': 'application/json',
             'Authorization': 'token {}'.format(passwd)
@@ -67,7 +67,7 @@ class GithubClient(object):
 
     @staticmethod
     def _encrypt_secret(secret, public_key):
-        '''
+        """
         Encrypt a secret string using the orgs public key
         https://docs.github.com/en/rest/reference/actions#create-or-update-an-organization-secret
 
@@ -75,7 +75,7 @@ class GithubClient(object):
         :type repo_slug: :class:`str`
         :returns: Encypted secret
         :rtype: :class:`str`
-        '''
+        """
         public_key = public.PublicKey(public_key['key'].encode("utf-8"), encoding.Base64Encoder())
         sealed_box = public.SealedBox(public_key)
         encrypted = sealed_box.encrypt(secret.encode("utf-8"))
@@ -87,7 +87,7 @@ class GithubClient(object):
         repo,
         org
     ):
-        '''
+        """
         Lists all the variables configured for a given repository
         https://docs.github.com/en/rest/reference/actions#list-repository-secrets
 
@@ -97,7 +97,7 @@ class GithubClient(object):
         :type org: :class:`str`
         :returns: A list of dicts describing secrets
         :rtype: :class:`list` of :class:`dict`
-        '''
+        """
 
         url = '{}/repos/{}/{}/actions/secrets'.format(
             API_URL, org, repo
@@ -112,7 +112,7 @@ class GithubClient(object):
         value,
         org
     ):
-        '''
+        """
         Add a new variable for a specific repository
         https://docs.github.com/en/rest/reference/actions#create-or-update-an-environment-secret
 
@@ -126,7 +126,7 @@ class GithubClient(object):
         :type org: :class:`str`
         :returns: A description of the variable added
         :rtype: :class:`dict`
-        '''
+        """
         url = '{}/repos/{}/{}/actions/secrets/{}'.format(
             API_URL, org, repo, key
         )
@@ -151,7 +151,7 @@ class GithubClient(object):
         repo,
         path
     ):
-        '''
+        """
         Reads file from Github
         https://docs.github.com/rest/reference/repos#get-repository-content
 
@@ -163,7 +163,7 @@ class GithubClient(object):
         :type repo: :class:`str`
         :returns: Content of the file
         :rtype: :class:`str`
-        '''
+        """
 
         extras = {
             'Accept': 'application/vnd.github.v4.raw'

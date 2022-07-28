@@ -19,14 +19,14 @@ class FirehoseClient(object):
         )
 
     def stream_exists(self, streamname):
-        '''
+        """
         Check it a stream exists
 
         :param streamname: Name of the Firehose Delivery Stream
         :type secret_name: :class:`str`
         :returns: True if stream exists, else False
         :rtype: :class:`bool`
-        '''
+        """
         try:
             self._client.describe_delivery_stream(
                 DeliveryStreamName=streamname
@@ -36,7 +36,7 @@ class FirehoseClient(object):
             return False
 
     def _get_stream_ids(self, streamname, desttype):
-        '''
+        """
         Get the version Id of a stream, and the dest Id of its destination
 
         :param streamname: Name of the Firehose Delivery Stream
@@ -45,7 +45,7 @@ class FirehoseClient(object):
         :type desttype: :class:`str`
         :returns: A tuple with version and dest Id, or None if stream/dest not found
         :rtype: :class:`tuple`
-        '''
+        """
         if desttype not in ['Splunk', 'HttpEndpoint']:
             raise Exception("Unknown destination type - must be 'Splunk' or 'HttpEndpoint'")
 
@@ -79,7 +79,7 @@ class FirehoseClient(object):
         )
 
     def update_splunk_hectoken(self, streamname, token):
-        '''
+        """
         Updates the HEC Token of a Firehose Splunk destination
 
         :param streamname: Name of the Firehose Delivery Stream
@@ -89,7 +89,7 @@ class FirehoseClient(object):
         :returns: A dictonary with response (bypass from boto)
         :rtype: :class:`dict`
 
-        '''
+        """
         try:
             versionid, destid = self._get_stream_ids(streamname=streamname, desttype='Splunk')
 
@@ -113,7 +113,7 @@ class FirehoseClient(object):
             )
 
     def update_http_accesskey(self, streamname, key):
-        '''
+        """
         Updates the access key of a Firehose HTTP destination
 
         :param streamname: Name of the Firehose Delivery Stream
@@ -123,7 +123,7 @@ class FirehoseClient(object):
         :returns: A dictonary with response (bypass from boto)
         :rtype: :class:`dict`
 
-        '''
+        """
         try:
             versionid, destid = self._get_stream_ids(
                 streamname=streamname,

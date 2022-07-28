@@ -10,7 +10,7 @@ from keydra.exceptions import ConfigException
 
 
 def exponential_backoff_retry(attempts: int, delay: float = 2, max_random: float = 3, exception_type=None):
-    '''
+    """
     Retries execution while it throws exceptions for the amount of times
     set up. Adds some randomness to the delay each time.
 
@@ -25,7 +25,7 @@ def exponential_backoff_retry(attempts: int, delay: float = 2, max_random: float
     :param exception_type: Optional, only retry is exception thrown is of this type
     :type exception_type: :class:`class`
     :returns: original return of invoked function or method
-    '''
+    """
     attempts = math.floor(attempts)
 
     def decorator(f):
@@ -101,12 +101,12 @@ class BaseProvider(ABC):
 
 
 class ConfigProvider(ABC):
-    '''
+    """
     Standardised Config Provider class. Takes in config and validates
 
     :param config: Keydra config provider config.
     :type config: :class:`dict`
-    '''
+    """
 
     ACCOUNTUSERNAME = 'accountusername'
     SECRETS = 'secrets'

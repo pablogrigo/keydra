@@ -17,7 +17,7 @@ class Keydra(object):
         self._cw = cw
 
     def rotate_and_distribute(self, run_for_secrets, rotate):
-        '''
+        """
         AWS Lambda handler
 
         :param event: Event triggering this function
@@ -27,7 +27,7 @@ class Keydra(object):
 
         `context` attributes
         ------------------
-        '''
+        """
         try:
             secrets = self._cfg.load_secrets(
                 secrets=run_for_secrets, rotate=rotate)

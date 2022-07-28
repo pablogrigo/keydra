@@ -27,7 +27,7 @@ class SecretsManagerClient(object):
         )
 
     def get_secret_value(self, secret_id, version_stage='current') -> str:
-        '''
+        """
         Retrieves a secret from SecretsManager by name and stage
 
         :param secret_id: ID (ARN or friendly secret name) of the secret
@@ -36,7 +36,7 @@ class SecretsManagerClient(object):
         :type version_stage: :class:`str`
         :returns: The secret matching the request
         :rtype: :class:`str`
-        '''
+        """
         stage = version_stage
 
         if version_stage.lower() == 'previous':
@@ -52,7 +52,7 @@ class SecretsManagerClient(object):
         return resp['SecretString']
 
     def create_secret(self, secret_name, secret_value, **kwargs):
-        '''
+        """
         Creates secret in SecretsManager
 
         :param secret_name: Name (identifier) for the secret
@@ -71,7 +71,7 @@ class SecretsManagerClient(object):
             'Name': :class:`str`,
             'VersionId': :class:`str`
         }
-        '''
+        """
         try:
             return self._client.create_secret(
                 Name=secret_name,
@@ -90,7 +90,7 @@ class SecretsManagerClient(object):
             )
 
     def describe_secret(self, secret_id):
-        '''
+        """
         Retrieves the details of a secret. It does not include the encrypted
         fields. Only those fields that are populated with a value are returned
         in the response.
@@ -130,7 +130,7 @@ class SecretsManagerClient(object):
             },
             'OwningService': :class:`str`
         }
-        '''
+        """
         try:
             return self._client.describe_secret(
                 SecretId=secret_id
@@ -141,7 +141,7 @@ class SecretsManagerClient(object):
             )
 
     def update_secret(self, secret_id, secret_value):
-        '''
+        """
         Stores a new encrypted secret value in the specified secret by
         creating a new version and attaching it to the secret with the label
         AWSCURRENT (which will trigger the rotation of the label in any
@@ -165,7 +165,7 @@ class SecretsManagerClient(object):
                 :class:`str`,
             ]
         }
-        '''
+        """
         try:
             return self._client.put_secret_value(
                 SecretId=secret_id,
@@ -180,7 +180,7 @@ class SecretsManagerClient(object):
             )
 
     def update_secret_description(self, secret_id, description):
-        '''
+        """
         Updates the description of a secret
 
         :param secret_id: ID (ARN or friendly secret name) of the secret
@@ -197,7 +197,7 @@ class SecretsManagerClient(object):
             'Name': :class:`str`,
             'VersionId': :class:`str`
         }
-        '''
+        """
         try:
             return self._client.update_secret(
                 SecretId=secret_id,
@@ -209,7 +209,7 @@ class SecretsManagerClient(object):
             )
 
     def generate_random_password(self, length=32, **kwargs):
-        '''
+        """
         Generates a random password of the specified complexity.
 
         :param length: Length of the password
@@ -227,7 +227,7 @@ class SecretsManagerClient(object):
         ExcludeLowercase=:class:`bool`
         IncludeSpace=:class:`bool`
         RequireEachIncludedType=:class:`bool`
-        '''
+        """
         kwargs['PasswordLength'] = length
 
         return self._client.get_random_password(**kwargs)['RandomPassword']

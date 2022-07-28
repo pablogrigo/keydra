@@ -31,7 +31,7 @@ class Client(BaseProvider):
         self._verify = verify
 
     def _generate_splunk_passwd(self, length):
-        '''
+        """
         Generate a random password from Secrets Manager
 
         :param length: Length of the new password
@@ -39,7 +39,7 @@ class Client(BaseProvider):
 
         :returns: New password as a string
         :rtype: :class:`passwd`
-        '''
+        """
         passwd = self._smclient.generate_random_password(
             length=length,
             IncludeSpace=True
@@ -47,7 +47,7 @@ class Client(BaseProvider):
         return passwd
 
     def _rotate_secret(self, secret):
-        '''
+        """
         Rotate password or token for an account on a single Splunk server
 
         :param secret: The spec from the secrets yaml
@@ -55,7 +55,7 @@ class Client(BaseProvider):
 
         :returns: New secret ready to distribute
         :rtype: :class:`dict`
-        '''
+        """
         username = self._credentials[USER_FIELD]
         current_passwd = self._credentials[PW_FIELD]
 
@@ -153,7 +153,7 @@ class Client(BaseProvider):
         return result
 
     def _distribute(self, secret, destination):
-        '''
+        """
         Distribute credentials to Splunk as app config
 
         :param secret: The spec from the secrets yaml
@@ -163,7 +163,7 @@ class Client(BaseProvider):
 
         :returns: The spec as distributed
         :rtype: :class:`dict`
-        '''
+        """
 
         # Connect to Splunk
         try:

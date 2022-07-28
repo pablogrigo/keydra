@@ -23,14 +23,14 @@ class SSMClient(object):
         )
 
     def parameter_exists(self, param_name) -> bool:
-        '''
+        """
         Check if an SSM parameter exists
 
         :param param_name: Name of the parameter
         :type param_name: :class:`str`
         :returns: True if exists, False if not
         :rtype: :class:`bool`
-        '''
+        """
         resp = self._client.describe_parameters(
             ParameterFilters=[
                 {
@@ -46,14 +46,14 @@ class SSMClient(object):
         return False
 
     def get_parameter_securestring_value(self, param_name) -> str:
-        '''
+        """
         Retrieves a SecureString parameter from SSM by name
 
         :param param_name: Name of the parameter
         :type param_name: :class:`str`
         :returns: The decrypted value stored in the parameter
         :rtype: :class:`str`
-        '''
+        """
         try:
             resp = self._client.get_parameter(
                 Name=param_name,
@@ -68,7 +68,7 @@ class SSMClient(object):
 
     def put_parameter_securestring(self, param_name, param_value, description,
                                    tier='Standard', key_id=None) -> dict:
-        '''
+        """
         Creates or Updates a SecureString parameter in SSM
 
         :param param_name: Name (identifier) for the parameter
@@ -88,7 +88,7 @@ class SSMClient(object):
             'Version': 123,
             'Tier': 'Standard'|'Advanced'|'Intelligent-Tiering'
         }
-        '''
+        """
         extras = {}
         if key_id:
             extras['KeyId'] = key_id

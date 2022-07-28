@@ -6,7 +6,7 @@ from simple_salesforce import Salesforce
 
 class SalesforceClient(object):
     def __init__(self, username, password, token, domain):
-        '''
+        """
         Initializes a Salesforce client
 
         :param username: Username used to connect
@@ -17,7 +17,7 @@ class SalesforceClient(object):
         :type token: :class:`passwd`
         :param domain: The domain to use
         :type domain: :class:`string`
-        '''
+        """
 
         # We only use the domain if connecting to a sandbox
         if domain != "test":
@@ -36,7 +36,7 @@ class SalesforceClient(object):
         )
 
     def get_user_id(self, username):
-        '''
+        """
         Retrieves the Salesforce ID for a given
         username in the form of an email address.
 
@@ -45,7 +45,7 @@ class SalesforceClient(object):
 
         :returns: The User ID corresponding to the username
         :rtype: :class:`string`
-        '''
+        """
         # SQLi!
         if validators.email(username) is not True:
             raise ValidationException(
@@ -64,7 +64,7 @@ class SalesforceClient(object):
             )
 
     def change_passwd(self, userid, newpassword):
-        '''
+        """
         Change a Salesforce user account password
 
         :param userid: The user ID of the account
@@ -74,7 +74,7 @@ class SalesforceClient(object):
 
         :returns: True if successful
         :rtype: :class:`bool`
-        '''
+        """
         url = (
             '{base}/User/{userid}/password'.format(
                 base=self._base_url,

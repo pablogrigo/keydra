@@ -7,7 +7,7 @@ from zeep.wsse.username import UsernameToken
 
 class SalesforceMarketingCloudClient(object):
     def __init__(self, username, password, subdomain, mid, businessUnit):
-        '''
+        """
         Initializes a Salesforce Marketing Cloud (via zeep) client
 
         :param username: The username (email) of the account
@@ -21,7 +21,7 @@ class SalesforceMarketingCloudClient(object):
         :type mid: :class:`int`
         :param businessUnit: The target Business Unit MID in the SFMC instance (multi-orgs only)
         :type businessUnit: :class:`int`
-        '''
+        """
         self._mid = mid
         self._businessUnit = businessUnit
         self._headers = {'SOAPAction': 'Update', 'Content-Type': 'text/xml'}
@@ -40,12 +40,12 @@ class SalesforceMarketingCloudClient(object):
         )
 
     def get_sfmc_status(self):
-        '''
+        """
         Grabs the current state of the Salesforce Marketing Cloud SOAP API
 
         :returns: Marketing Cloud API Status (OK / InMaintenance / UnplannedOutage)
         :rtype: :class:`string`
-        '''
+        """
 
         response = self._client.service.GetSystemStatus()
         parsedResponse = helpers.serialize_object(response)
@@ -53,7 +53,7 @@ class SalesforceMarketingCloudClient(object):
         return parsedResponse['OverallStatus']
 
     def change_passwd(self, username, newpassword):
-        '''
+        """
         Changes a Salesforce Marketing Cloud User account password.
 
         :param username: The username (email) of the account
@@ -63,7 +63,7 @@ class SalesforceMarketingCloudClient(object):
 
         :returns: True if successful
         :rtype: :class:`bool`
-        '''
+        """
 
         # Retrieve Complex Types to build payload
         account_user_obj = self._client.get_type('ns0:AccountUser')

@@ -26,7 +26,7 @@ class PasswordChangeException(Exception):
 
 class QualysClient(object):
     def __init__(self, username, password, platform='US3', verify=True):
-        '''
+        """
         Initializes a Qualys client
 
         :param username: Username used to connect
@@ -37,7 +37,7 @@ class QualysClient(object):
         :type platform: :class:`string`, optional
         :param verify: Verify TLS
         :type verify: :class:`bool`
-        '''
+        """
 
         self._baseurl = API_URL[platform]
         self._user = username
@@ -58,7 +58,7 @@ class QualysClient(object):
             )
 
     def _get(self, url, params=None):
-        '''
+        """
         Send a GET request to the Qualys API.
 
         :param url: The URL to connect to, without the base
@@ -68,7 +68,7 @@ class QualysClient(object):
 
         :returns: Full API response
         :rtype: :class:`OrderedDict`
-        '''
+        """
 
         api_url = '{}/{}'.format(self._baseurl, url)
 
@@ -103,19 +103,19 @@ class QualysClient(object):
         )
 
     def _user_list(self):
-        '''
+        """
         Get a list of all current users.
 
         :returns: List of users
         :rtype: :class:`OrderedDict`
-        '''
+        """
 
         return self._get(
             url='msp/user_list.php'
         )['USER_LIST_OUTPUT']['USER_LIST']
 
     def change_passwd(self, username):
-        '''
+        """
         Update a Qualys user account password
 
         :param username: The username of the account
@@ -123,7 +123,7 @@ class QualysClient(object):
 
         :returns: The new password
         :rtype: :class:`string`
-        '''
+        """
 
         params = {
             "email": "0",

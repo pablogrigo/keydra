@@ -31,7 +31,7 @@ class AppSyncClient:
         )
 
     def list_api_keys(self, api_id, **kwargs):
-        '''
+        """
         Lists all api keys for an existing app sync api
 
         :param api_id: ID (ARN or friendly api name) for the api
@@ -50,7 +50,7 @@ class AppSyncClient:
             ],
             'nextToken': 'string'
         }
-        '''
+        """
         try:
             return self._client.list_api_keys(apiId=api_id, **kwargs)
         except ClientError as e:
@@ -58,7 +58,7 @@ class AppSyncClient:
                 'Error creating api key for app {}: {}'.format(api_id, e))
 
     def create_api_key(self, api_id, expires, description):
-        '''
+        """
         Creates an api key for an existing app sync api
 
         :param api_id: ID (ARN or friendly api name) for the api
@@ -78,7 +78,7 @@ class AppSyncClient:
                 'expires': 123
             }
         }
-        '''
+        """
         try:
             return self._client.create_api_key(
                 apiId=api_id,
@@ -90,7 +90,7 @@ class AppSyncClient:
                 'Error creating api key for app {}: {}'.format(api_id, e))
 
     def delete_api_key(self, api_id, id):
-        '''
+        """
         Deletes an api key for an existing app sync api
 
         :param api_id: ID (ARN or friendly api name) for the api
@@ -103,7 +103,7 @@ class AppSyncClient:
         Sample response:
 
         {}
-        '''
+        """
         try:
             return self._client.delete_api_key(
                 apiId=api_id,
@@ -115,7 +115,7 @@ class AppSyncClient:
                     id, api_id, e))
 
     def get_graphql_api(self, api_id):
-        '''
+        """
         Gets an api hosted on app sync
 
         :param api_id: ID (ARN or friendly api name) for the api
@@ -175,7 +175,7 @@ class AppSyncClient:
                 'wafWebAclArn': 'string'
             }
         }
-        '''
+        """
         try:
             return self._client.get_graphql_api(
                 apiId=api_id

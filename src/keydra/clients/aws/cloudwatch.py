@@ -51,7 +51,7 @@ class CloudwatchClient:
 
 
 def timed(metric_name, specialise=True):
-    '''
+    """
     Publishes execution time metric to Cloudwatch.
 
     Metrics are posted under the 'ExecutionTime' metric name, in seconds.
@@ -64,7 +64,7 @@ def timed(metric_name, specialise=True):
         provider. If any is found.
     :type specialise: :class:`bool`
     :returns: original return of invoked function or method
-    '''
+    """
     start = datetime.now()
 
     def decorator(f):

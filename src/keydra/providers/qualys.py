@@ -28,7 +28,7 @@ class Client(BaseProvider):
         self._credentials = credentials
 
     def _rotate_secret(self, secret):
-        '''
+        """
         Rotate password for an account
 
         :param secret: The spec from the secrets yaml
@@ -36,7 +36,7 @@ class Client(BaseProvider):
 
         :returns: New secret ready to distribute
         :rtype: :class:`dict`
-        '''
+        """
         if self._credentials is None:
             raise RotationException(
                 'No credentials provided to provider on init, '
