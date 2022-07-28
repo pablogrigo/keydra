@@ -28,9 +28,6 @@ class Keydra(object):
         `context` attributes
         ------------------
         '''
-
-        secrets = None
-
         try:
             secrets = self._cfg.load_secrets(
                 secrets=run_for_secrets, rotate=rotate)
@@ -169,8 +166,6 @@ class Keydra(object):
 
     @timed('distribution', specialise=True)
     def _distribute_single_secret(self, target, secret):
-        km_provider = None
-
         LOGGER.debug(
             {'message': 'Distributing secret to target', 'data': target})
 

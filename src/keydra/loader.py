@@ -39,8 +39,6 @@ LOGGER = km_logging.get_logger()
 
 
 def fetch_provider_creds(provider, key_name):
-    secret_value = None
-
     secret_id = '{}/{}'.format(KEYDRA_SECRETS_PREFIX, provider.lower())
 
     if key_name:
