@@ -239,14 +239,14 @@ class Client(BaseProvider):
     @classmethod
     def validate_spec(cls, spec):
         if 'config' not in spec:
-            return (False, "Required section 'config' not present in spec")
+            return False, "Required section 'config' not present in spec"
 
         if 'host' not in spec['config']:
-            return (False, "Config must contain 'host'")
+            return False, "Config must contain 'host'"
 
         host = spec['config']['host']
         if not validators.domain(host) and not validators.ipv4(host):
-            return (False, 'Host {} must be a valid IP or domain name'.format(host))
+            return False, 'Host {} must be a valid IP or domain name'.format(host)
 
         return True, 'It is valid!'
 

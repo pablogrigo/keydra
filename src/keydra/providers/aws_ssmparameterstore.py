@@ -149,7 +149,7 @@ class SSMParameterProvider(BaseProvider):
         if 'source' in spec:
             return True, 'All good!'
 
-        if ('config' in spec):
+        if 'config' in spec:
             if not (spec['config'].get('bypass') or spec['config'].get('rotate_attribute')):
                 return False, 'Must specify either "bypass" or "rotate_attribute" in the config'
 

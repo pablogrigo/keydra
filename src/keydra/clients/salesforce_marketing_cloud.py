@@ -50,7 +50,7 @@ class SalesforceMarketingCloudClient(object):
         response = self._client.service.GetSystemStatus()
         parsedResponse = helpers.serialize_object(response)
 
-        return (parsedResponse['OverallStatus'])
+        return parsedResponse['OverallStatus']
 
     def change_passwd(self, username, newpassword):
         '''
@@ -83,7 +83,7 @@ class SalesforceMarketingCloudClient(object):
 
         # Check Sever is OK before posting a User Update
         serverStatus = self.get_sfmc_status()
-        if (serverStatus != 'OK'):
+        if serverStatus != 'OK':
             raise Exception(
                 'Server Error: {}'.format(serverStatus)
             )
@@ -94,7 +94,7 @@ class SalesforceMarketingCloudClient(object):
 
         # SFMC Soap response always responds StatusCode=200 unless server error.
         # Actual error is in response 'results' body
-        if (parsedResponse['StatusCode'] != 'OK'):
+        if parsedResponse['StatusCode'] != 'OK':
             raise Exception(
                 'Failed to change password. Error: {} {}'.format(
                     parsedResponse['ErrorCode'], parsedResponse['StatusMessage']

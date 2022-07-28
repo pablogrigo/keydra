@@ -136,7 +136,7 @@ class QualysClient(object):
         )['PASSWORD_CHANGE_OUTPUT']
 
         try:
-            return (resp['RETURN']['CHANGES']['USER_LIST']['USER']['PASSWORD'])
+            return resp['RETURN']['CHANGES']['USER_LIST']['USER']['PASSWORD']
 
         except Exception:
             raise PasswordChangeException(

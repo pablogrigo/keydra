@@ -192,7 +192,7 @@ class SplunkClient(object):
                 exists = False
             else:
                 # We have another error, re-raise it
-                raise (e)
+                raise e
 
         if exists:
             # Storage password already exists, we'll update
