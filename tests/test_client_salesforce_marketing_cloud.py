@@ -21,17 +21,17 @@ class TestSalesforceMarketingClient(unittest.TestCase):
 
     @classmethod
     @patch('keydra.clients.salesforce_marketing_cloud.Client')
-    def setUpClass(self, mk_zeep_client):
+    def setUpClass(cls, mk_zeep_client):
         # Init Salesforce Marketing Client once for all tests
         mk_zeep_client.return_value = None
-        self.sfmc_client = SalesforceMarketingCloudClient(
+        cls.sfmc_client = SalesforceMarketingCloudClient(
             username=TEST_DATA['username'],
             password=TEST_DATA['password'],
             subdomain=TEST_DATA['subdomain'],
             mid=TEST_DATA['mid'],
             businessUnit=TEST_DATA['businessunit'],
         )
-        self.sfmc_client._client = MagicMock()
+        cls.sfmc_client._client = MagicMock()
 
     def test__init(self):
         self.assertIsNotNone(self.sfmc_client)

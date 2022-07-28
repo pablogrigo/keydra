@@ -103,7 +103,7 @@ class Client(BaseProvider):
             return Client._validate_repository_spec(spec)
 
     @classmethod
-    def pre_process_spec(self, spec, context: dict):
+    def pre_process_spec(cls, spec, context: dict):
         specs = []
 
         target = copy.deepcopy(spec)

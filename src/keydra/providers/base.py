@@ -92,7 +92,7 @@ class BaseProvider(ABC):
         return True, 'All good!'
 
     @classmethod
-    def redact_result(self, result):
+    def redact_result(cls, result):
         return result
 
     @classmethod

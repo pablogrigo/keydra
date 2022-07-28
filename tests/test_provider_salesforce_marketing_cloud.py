@@ -53,8 +53,8 @@ SFMC_SPEC = {
 class TestProviderSalesforce(unittest.TestCase):
 
     @classmethod
-    def setUpClass(self):
-        self.cli = salesforce_marketing_cloud.Client(
+    def setUpClass(cls):
+        cls.cli = salesforce_marketing_cloud.Client(
             credentials=SFMC_CREDS,
             session=MagicMock(),
             region_name='ap-southeast-2'
